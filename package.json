@@ -1,0 +1,13 @@
+{
+  "name": "nexus-wa-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp Group Automator",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.64.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}
