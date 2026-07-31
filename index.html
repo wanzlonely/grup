@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Room Status Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="topbar">
+            <div class="live-indicator">
+                <div class="ring"></div>
+                <div class="dot"></div>
+                <span>SYSTEM ACTIVE</span>
+            </div>
+            <h1 class="title">LIVE ROOM STATUS</h1>
+            <div class="time-badge">Dashboard Monitor</div>
+        </header>
+
+        <main class="workflow-canvas">
+            <div class="node-container">
+                <div class="node card-primary">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="node-content">
+                        <h2>Tamu Datang</h2>
+                        <p>Proses Check-in</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-line vertical"></div>
+
+            <div class="node-container">
+                <div class="node card-secondary">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                    </div>
+                    <div class="node-content">
+                        <h2>Front Office</h2>
+                        <p>Mengecek Status Kamar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-split">
+                <div class="split-line-horizontal"></div>
+                <div class="split-line-vertical left"></div>
+                <div class="split-line-vertical right"></div>
+            </div>
+
+            <div class="branches-wrapper">
+                <div class="mobile-divider">SKENARIO 1</div>
+                
+                <div class="branch">
+                    <div class="node-container">
+                        <div class="node card-success">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Kamar Siap</h2>
+                                <p>Tersedia & Bersih</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-final">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Tamu Masuk Kamar</h2>
+                                <p>Proses Selesai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mobile-divider">SKENARIO 2</div>
+
+                <div class="branch">
+                    <div class="node-container">
+                        <div class="node card-warning">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Kamar Belum Siap</h2>
+                                <p>Menunggu Pembersihan</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-outline">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Update Layar Sistem</h2>
+                                <p>Status Ditampilkan Live</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-action">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Housekeeping</h2>
+                                <p>Membersihkan Kamar</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-progress">
+                            <div class="progress-header">
+                                <h2>Live Progress</h2>
+                                <div class="pulsing-dot"></div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <span class="lbl-25">25%</span>
+                                <span class="lbl-50">50%</span>
+                                <span class="lbl-75">75%</span>
+                                <span class="lbl-100">100%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-notification">
+                            <div class="bell-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Notifikasi Otomatis</h2>
+                                <p>"Kamar Anda Sudah Siap"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-action">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Serah Terima</h2>
+                                <p>Tamu Menerima Kunci</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-line vertical"></div>
+
+                    <div class="node-container">
+                        <div class="node card-final">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </div>
+                            <div class="node-content">
+                                <h2>Tamu Masuk Kamar</h2>
+                                <p>Proses Selesai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
