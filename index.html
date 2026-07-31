@@ -3,205 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guest Tracker - Live Room Status</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Live Room Status & Video Call</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-wrapper">
-        <header class="app-header">
-            <div class="header-content">
+    <div class="demo-controller">
+        <div class="demo-title">Simulasi Perangkat</div>
+        <div class="role-toggle">
+            <button class="role-btn active" onclick="switchRole('guest')" id="btn-guest">📱 Layar Tamu</button>
+            <button class="role-btn" onclick="switchRole('hk')" id="btn-hk">🧹 Layar Housekeeping</button>
+        </div>
+    </div>
+
+    <!-- HALAMAN TAMU -->
+    <div id="view-guest" class="app-view active-view">
+        <div class="app-container guest-theme">
+            <header class="app-header">
                 <div>
                     <h1 class="room-title">Kamar 302</h1>
-                    <p class="room-subtitle">Pelacakan Persiapan Kamar</p>
+                    <p class="room-subtitle">Portal Tamu VIP</p>
                 </div>
-                <div class="live-badge" id="live-badge">
-                    <span class="pulse-dot"></span>
-                    <span id="live-text">MEMUAT SISTEM</span>
-                </div>
-            </div>
-        </header>
+                <div class="status-badge" id="guest-status-badge">Menunggu Konfirmasi</div>
+            </header>
 
-        <main class="main-dashboard">
-            <section class="stepper-section">
-                <div class="stepper">
-                    <div class="step active" id="step-1">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <main class="grid-layout">
+                <section class="video-call-section">
+                    <div class="video-container">
+                        <video class="main-cam" autoplay playsinline muted></video>
+                        <div class="cam-label">Kamera Housekeeping</div>
+                        
+                        <div class="pip-container">
+                            <video class="pip-cam" autoplay playsinline muted></video>
+                            <div class="pip-label">Anda</div>
                         </div>
-                        <div class="step-text">Check-in</div>
-                    </div>
-                    <div class="step-line" id="line-1"></div>
-                    
-                    <div class="step" id="step-2">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-                        </div>
-                        <div class="step-text">Inspeksi</div>
-                    </div>
-                    <div class="step-line" id="line-2"></div>
-                    
-                    <div class="step" id="step-3">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                        </div>
-                        <div class="step-text">Pembersihan</div>
-                    </div>
-                    <div class="step-line" id="line-3"></div>
-                    
-                    <div class="step" id="step-4">
-                        <div class="step-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        </div>
-                        <div class="step-text">Kamar Siap</div>
-                    </div>
-                </div>
-            </section>
 
-            <div class="grid-layout">
-                <section class="camera-section">
-                    <div class="camera-card">
-                        <div class="camera-header">
-                            <h2>Live Housekeeping Cam</h2>
-                            <div class="rec-indicator">
-                                <span class="rec-dot"></span> REC
-                            </div>
-                        </div>
-                        <div class="video-wrapper">
-                            <div class="video-placeholder">Menunggu Akses Kamera...</div>
-                            <video id="housekeeping-cam" autoplay playsinline muted></video>
-                            <div class="camera-overlay">
-                                <span id="cam-time">00:00:00</span>
-                                <span>CAM-HK-01</span>
-                            </div>
+                        <div class="call-controls">
+                            <button class="call-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></button>
+                            <button class="call-btn danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path><line x1="23" y1="1" x2="1" y2="23"></line></svg></button>
                         </div>
                     </div>
                 </section>
 
-                <section class="status-section">
-                    <div class="status-card">
-                        <h2 class="status-heading">Progress Pekerjaan</h2>
-                        <div class="progress-display">
-                            <div class="percentage" id="percentage-text">0%</div>
-                            <div class="status-label" id="status-label">Menyiapkan Data...</div>
-                        </div>
+                <section class="progress-section">
+                    <div class="card">
+                        <h2>Live Progress Kamar</h2>
                         
-                        <div class="progress-track">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                        
-                        <div class="progress-markers">
-                            <span>0%</span>
-                            <span>25%</span>
-                            <span>50%</span>
-                            <span>75%</span>
-                            <span>100%</span>
+                        <div class="progress-circle-container">
+                            <div class="progress-circle" id="guest-circle">
+                                <span id="guest-percent">0%</span>
+                            </div>
                         </div>
 
-                        <div class="alert-box" id="alert-box">
-                            <div class="alert-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <h3 class="status-text" id="guest-status-text">Menunggu Housekeeping</h3>
+                        <p class="status-desc" id="guest-status-desc">Petugas akan segera menuju kamar Anda.</p>
+
+                        <div class="stepper-vertical">
+                            <div class="step-v active" id="g-step-1">
+                                <div class="step-dot"></div>
+                                <div class="step-content">
+                                    <h4>Persiapan</h4>
+                                    <p>Menyiapkan alat kebersihan</p>
+                                </div>
                             </div>
-                            <div class="alert-text">
-                                <strong>Pemberitahuan</strong>
-                                <p id="alert-message">Mohon tunggu, housekeeping sedang menuju kamar Anda.</p>
+                            <div class="step-v" id="g-step-2">
+                                <div class="step-dot"></div>
+                                <div class="step-content">
+                                    <h4>Pembersihan</h4>
+                                    <p>Membersihkan area kamar & mandi</p>
+                                </div>
+                            </div>
+                            <div class="step-v" id="g-step-3">
+                                <div class="step-dot"></div>
+                                <div class="step-content">
+                                    <h4>Finalisasi</h4>
+                                    <p>Penggantian linen & amenities</p>
+                                </div>
+                            </div>
+                            <div class="step-v" id="g-step-4">
+                                <div class="step-dot"></div>
+                                <div class="step-content">
+                                    <h4>Selesai</h4>
+                                    <p>Kamar siap ditempati</p>
+                                </div>
                             </div>
                         </div>
-                        
-                        <button class="action-btn" id="action-btn" disabled>Ambil Kunci Kamar</button>
+
+                        <button class="action-btn" id="guest-action-btn" disabled>Ambil Kunci Digital</button>
                     </div>
                 </section>
-            </div>
-        </main>
+            </main>
+        </div>
+    </div>
+
+    <!-- HALAMAN HOUSEKEEPING -->
+    <div id="view-hk" class="app-view">
+        <div class="app-container hk-theme">
+            <header class="app-header">
+                <div>
+                    <h1 class="room-title">Tugas: Kamar 302</h1>
+                    <p class="room-subtitle">Portal Petugas Housekeeping</p>
+                </div>
+                <div class="hk-timer" id="hk-timer">00:00</div>
+            </header>
+
+            <main class="grid-layout hk-layout">
+                <section class="video-call-section">
+                    <div class="video-container">
+                        <video class="main-cam" autoplay playsinline muted></video>
+                        <div class="cam-label">Kamera Tamu</div>
+                        
+                        <div class="pip-container">
+                            <video class="pip-cam" autoplay playsinline muted></video>
+                            <div class="pip-label">Kamera Anda</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="control-section">
+                    <div class="card">
+                        <h2>Kontrol Progress Kamar</h2>
+                        <p class="subtitle">Perbarui status secara real-time ke aplikasi Tamu.</p>
+
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="hk-progress-fill"></div>
+                        </div>
+
+                        <div class="action-grid">
+                            <button class="hk-action-btn active" onclick="updateProgress(0)" id="btn-p-0">
+                                <span>0%</span>
+                                <small>Persiapan</small>
+                            </button>
+                            <button class="hk-action-btn" onclick="updateProgress(35)" id="btn-p-35">
+                                <span>35%</span>
+                                <small>Mulai Bersih</small>
+                            </button>
+                            <button class="hk-action-btn" onclick="updateProgress(75)" id="btn-p-75">
+                                <span>75%</span>
+                                <small>Ganti Linen</small>
+                            </button>
+                            <button class="hk-action-btn finish" onclick="updateProgress(100)" id="btn-p-100">
+                                <span>100%</span>
+                                <small>Kamar Siap</small>
+                            </button>
+                        </div>
+
+                        <div class="checklist">
+                            <h3>Checklist Wajib</h3>
+                            <label class="check-item">
+                                <input type="checkbox" onchange="checkTask(this)">
+                                <span class="checkmark"></span>
+                                Vakum lantai dan karpet
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" onchange="checkTask(this)">
+                                <span class="checkmark"></span>
+                                Sanitasi kamar mandi
+                            </label>
+                            <label class="check-item">
+                                <input type="checkbox" onchange="checkTask(this)">
+                                <span class="checkmark"></span>
+                                Isi ulang amenities & air minum
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
 
     <script>
-        const videoElement = document.getElementById('housekeeping-cam');
-        const camTimeElement = document.getElementById('cam-time');
-        const percentageText = document.getElementById('percentage-text');
-        const progressFill = document.getElementById('progress-fill');
-        const statusLabel = document.getElementById('status-label');
-        const liveBadge = document.getElementById('live-badge');
-        const liveText = document.getElementById('live-text');
-        const alertBox = document.getElementById('alert-box');
-        const alertMessage = document.getElementById('alert-message');
-        const actionBtn = document.getElementById('action-btn');
-
-        const s1 = document.getElementById('step-1');
-        const s2 = document.getElementById('step-2');
-        const s3 = document.getElementById('step-3');
-        const s4 = document.getElementById('step-4');
-        const l1 = document.getElementById('line-1');
-        const l2 = document.getElementById('line-2');
-        const l3 = document.getElementById('line-3');
-
-        let progress = 0;
-        let simulationInterval;
-
+        const videos = document.querySelectorAll('video');
+        
         async function startCamera() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                videoElement.srcObject = stream;
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                videos.forEach(video => {
+                    video.srcObject = stream;
+                });
             } catch (err) {
-                document.querySelector('.video-placeholder').innerText = "Kamera tidak ditemukan atau akses ditolak.";
+                console.log("Kamera tidak diizinkan atau tidak tersedia.");
             }
         }
-
-        function updateTime() {
-            const now = new Date();
-            camTimeElement.innerText = now.toLocaleTimeString('id-ID');
-        }
-
-        function updateUI(val) {
-            percentageText.innerText = val + '%';
-            progressFill.style.width = val + '%';
-
-            if (val >= 0 && val < 25) {
-                statusLabel.innerText = "Front Office Mengecek Kamar";
-                alertMessage.innerText = "Sistem sedang memverifikasi ketersediaan kamar Anda.";
-                s1.classList.add('active');
-            } else if (val >= 25 && val < 50) {
-                statusLabel.innerText = "Housekeeping Tiba di Kamar";
-                alertMessage.innerText = "Petugas mulai mempersiapkan perlengkapan kebersihan.";
-                s2.classList.add('active');
-                l1.classList.add('active');
-            } else if (val >= 50 && val < 100) {
-                statusLabel.innerText = "Proses Pembersihan Berlangsung";
-                alertMessage.innerText = "Membersihkan area kamar dan mengganti linen.";
-                s3.classList.add('active');
-                l2.classList.add('active');
-            } else if (val === 100) {
-                statusLabel.innerText = "Kamar Telah Siap";
-                statusLabel.style.color = "var(--success)";
-                percentageText.style.color = "var(--success)";
-                alertBox.classList.add('success-alert');
-                alertMessage.innerText = "Kamar Anda sudah bersih dan siap untuk ditempati.";
-                s4.classList.add('active');
-                l3.classList.add('active');
-                actionBtn.removeAttribute('disabled');
-                actionBtn.classList.add('ready');
-                liveBadge.classList.add('ready-badge');
-                liveText.innerText = "KAMAR SIAP";
-                clearInterval(simulationInterval);
-            }
-        }
-
-        function startSimulation() {
-            liveBadge.classList.add('active-badge');
-            liveText.innerText = "LIVE STREAMING";
-            
-            simulationInterval = setInterval(() => {
-                progress += 1;
-                if (progress > 100) progress = 100;
-                updateUI(progress);
-            }, 500);
-        }
-
         startCamera();
-        setInterval(updateTime, 1000);
-        setTimeout(startSimulation, 2000);
+
+        function switchRole(role) {
+            document.querySelectorAll('.app-view').forEach(el => el.classList.remove('active-view'));
+            document.querySelectorAll('.role-btn').forEach(el => el.classList.remove('active'));
+            
+            if(role === 'guest') {
+                document.getElementById('view-guest').classList.add('active-view');
+                document.getElementById('btn-guest').classList.add('active');
+            } else {
+                document.getElementById('view-hk').classList.add('active-view');
+                document.getElementById('btn-hk').classList.add('active');
+            }
+        }
+
+        let currentProgress = 0;
+
+        function updateProgress(value) {
+            currentProgress = value;
+            
+            document.querySelectorAll('.hk-action-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-p-${value}`).classList.add('active');
+            document.getElementById('hk-progress-fill').style.width = `${value}%`;
+
+            const gCircle = document.getElementById('guest-circle');
+            const gPercent = document.getElementById('guest-percent');
+            const gStatus = document.getElementById('guest-status-text');
+            const gDesc = document.getElementById('guest-status-desc');
+            const gBadge = document.getElementById('guest-status-badge');
+            const gBtn = document.getElementById('guest-action-btn');
+
+            gPercent.innerText = `${value}%`;
+            gCircle.style.background = `conic-gradient(var(--g-primary) ${value}%, #f1f5f9 ${value}%)`;
+
+            document.querySelectorAll('.step-v').forEach(el => el.classList.remove('active'));
+
+            if(value === 0) {
+                gStatus.innerText = "Persiapan Housekeeping";
+                gDesc.innerText = "Petugas sedang menyiapkan alat kebersihan.";
+                gBadge.innerText = "Menunggu";
+                gBadge.className = "status-badge waiting";
+                document.getElementById('g-step-1').classList.add('active');
+                gBtn.setAttribute('disabled', 'true');
+                gBtn.classList.remove('ready');
+            } else if (value === 35) {
+                gStatus.innerText = "Proses Pembersihan";
+                gDesc.innerText = "Petugas sedang membersihkan area kamar Anda.";
+                gBadge.innerText = "Sedang Dikerjakan";
+                gBadge.className = "status-badge working";
+                document.getElementById('g-step-1').classList.add('active');
+                document.getElementById('g-step-2').classList.add('active');
+                gBtn.setAttribute('disabled', 'true');
+                gBtn.classList.remove('ready');
+            } else if (value === 75) {
+                gStatus.innerText = "Tahap Finalisasi";
+                gDesc.innerText = "Petugas mengganti seprai dan melengkapi amenities.";
+                gBadge.innerText = "Hampir Selesai";
+                gBadge.className = "status-badge working";
+                document.getElementById('g-step-1').classList.add('active');
+                document.getElementById('g-step-2').classList.add('active');
+                document.getElementById('g-step-3').classList.add('active');
+                gBtn.setAttribute('disabled', 'true');
+                gBtn.classList.remove('ready');
+            } else if (value === 100) {
+                gStatus.innerText = "Kamar Anda Telah Siap!";
+                gDesc.innerText = "Terima kasih telah menunggu. Silakan masuk.";
+                gBadge.innerText = "Kamar Siap";
+                gBadge.className = "status-badge success";
+                gCircle.style.background = `conic-gradient(var(--g-success) 100%, #f1f5f9 0%)`;
+                gPercent.style.color = "var(--g-success)";
+                document.querySelectorAll('.step-v').forEach(el => el.classList.add('active'));
+                gBtn.removeAttribute('disabled');
+                gBtn.classList.add('ready');
+            }
+        }
+
+        function checkTask(checkbox) {
+            const row = checkbox.parentElement;
+            if(checkbox.checked) {
+                row.style.textDecoration = "line-through";
+                row.style.color = "#94a3b8";
+            } else {
+                row.style.textDecoration = "none";
+                row.style.color = "inherit";
+            }
+        }
+
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            document.getElementById('hk-timer').innerText = `${m}:${s}`;
+        }, 1000);
+
+        updateProgress(0);
     </script>
 </body>
 </html>
