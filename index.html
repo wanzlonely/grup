@@ -22,7 +22,7 @@
 </script><script>window.Intl=window.Intl||{};Intl.t=function(s){return(Intl._locale&&Intl._locale[s])||s;};</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>LIVE ROOM PRO — Low Latency Fix</title>
+<title>LIVE ROOM PRO — Secure P2P</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F6F4F0;--paper:#FFF;--ink:#111113;--muted:#8A8885;--line:#E8E3DD;--green:#159B5A;--green-bg:#E7F6ED;--green-line:#BFE8CB;--red-bg:#FDE8E8;--red-line:#F5B5B5;--shadow:0 18px 50px rgba(17,17,17,0.06)}
@@ -81,8 +81,9 @@ button{font-family:inherit;touch-action:manipulation}
 .est strong{font-size:14px}
 .est .bar{width:100%;max-width:220px;height:6px;background:var(--bg);border:1px solid var(--line);border-radius:100px;overflow:hidden;margin-top:6px}
 .est .bar span{display:block;height:100%;background:var(--ink);transition:width 0.8s;width:0%}
-.room-photo-wrap{margin-top:16px;width:100%;border-radius:18px;overflow:hidden;position:relative;border:1px solid var(--line);height:180px;background:var(--bg)}
-.room-photo-wrap img{width:100%;height:100%;object-fit:cover}
+.room-photo-wrap{margin-top:16px;width:100%;border-radius:18px;overflow:hidden;position:relative;border:1px solid var(--line);height:180px;background:var(--bg);cursor:pointer}
+.room-photo-wrap img{width:100%;height:100%;object-fit:cover;transition:0.3s}
+.room-photo-wrap:hover img{transform:scale(1.03)}
 .photo-overlay{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:100px;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);color:#fff;font-size:10px;font-weight:600}
 .main-grid{display:grid;grid-template-columns:1fr;gap:16px}
 @media(min-width:1000px){.main-grid{grid-template-columns:380px 1fr}}
@@ -133,27 +134,29 @@ button{font-family:inherit;touch-action:manipulation}
 .fs-btn{position:absolute;right:10px;bottom:10px;z-index:6;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer;display:grid;place-items:center;font-size:15px}
 .viewer-pip{position:absolute;left:10px;bottom:10px;z-index:6;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:100px;background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);color:#fff;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,0.12)}
 .cam-actions{padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--paper)}
-.action-row{display:flex;gap:8px;width:100%}
-.action-row .btn-line{flex:1}
-.btn-dark{flex:1;padding:13px 16px;border-radius:14px;background:var(--ink);color:#fff;border:1px solid var(--ink);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s}
-.btn-line{padding:11px 12px;border-radius:12px;background:var(--paper);border:1px solid var(--line);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s}
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+.btn-dark{padding:14px 16px;border-radius:14px;background:var(--ink);color:#fff;border:1px solid var(--ink);font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:0.2s;line-height:1.1}
+.btn-dark small{font-size:10px;font-weight:500;opacity:0.7;display:block}
+.btn-line{padding:12px 10px;border-radius:12px;background:var(--paper);border:1px solid var(--line);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s;line-height:1.1;white-space:nowrap}
+.btn-line:active{transform:scale(0.98)}
 .btn-full{width:100%}
-.btn-mic{width:100%;padding:14px 18px;border-radius:16px;background:#111113;color:#fff;border:1px solid #222;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;user-select:none;position:relative}
+.btn-mic{width:100%;padding:14px 16px;border-radius:16px;background:#111113;color:#fff;border:1px solid #222;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;user-select:none;position:relative}
 .btn-mic .mic-ico{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.12);display:grid;place-items:center;font-size:16px;flex-shrink:0}
-.btn-mic .mic-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1}
-.btn-mic .mic-text b{font-size:13px}
-.btn-mic .mic-text small{font-size:10px;opacity:0.7;font-weight:500;margin-top:2px}
+.btn-mic .mic-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.1;text-align:left}
+.btn-mic .mic-text b{font-size:13px;white-space:nowrap}
+.btn-mic .mic-text small{font-size:10px;opacity:0.7;font-weight:500;margin-top:2px;white-space:nowrap}
 .btn-mic.talking{background:#ff3b30;border-color:#ff3b30;color:#fff;box-shadow:0 0 0 6px rgba(255,59,48,0.18),0 12px 24px rgba(255,59,48,0.25);animation:talkpulse 1s infinite}
 .btn-mic.guest-mic{background:var(--ink);color:#fff;border-color:var(--ink)}
 .btn-mic.guest-mic.talking{background:#ff3b30;border-color:#ff3b30}
 .talking-indicator{position:absolute;left:50%;top:56px;transform:translateX(-50%);z-index:8;padding:8px 14px;border-radius:100px;background:rgba(255,59,48,0.92);backdrop-filter:blur(10px);color:#fff;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,0.15);display:none;align-items:center;gap:6px;box-shadow:0 10px 30px rgba(0,0,0,0.25);white-space:nowrap}
-.talking-indicator.show{display:flex;animation:slideDown 0.25s cubic-bezier(.16,1,.3,1)}
+.talking-indicator.show{display:flex;animation:slideDown 0.25s}
 .talking-indicator .dot{width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,0.25);animation:pulse 1s infinite}
 .hidden-audio{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 .photo-strip{display:flex;gap:8px;padding:0 14px 14px;overflow:auto}
-.photo{position:relative;min-width:88px;width:88px;height:64px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--bg);flex-shrink:0}
+.photo{position:relative;min-width:88px;width:88px;height:64px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--bg);flex-shrink:0;cursor:pointer;transition:0.2s}
+.photo:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.12)}
 .photo img{width:100%;height:100%;object-fit:cover}
-.photo .del{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;border:0;background:rgba(0,0,0,0.6);color:#fff;font-size:10px;cursor:pointer;display:grid;place-items:center}
+.photo .del{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;border:0;background:rgba(0,0,0,0.6);color:#fff;font-size:10px;cursor:pointer;display:grid;place-items:center;z-index:2}
 .checklist-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
 .cl-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .cl-head h4{font-size:12.5px}
@@ -179,7 +182,14 @@ button{font-family:inherit;touch-action:manipulation}
 .perm-box ol{text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px 28px;font-size:12px;line-height:1.6;margin-bottom:14px}
 .perm-actions{display:flex;gap:8px}
 .perm-actions .btn-dark,.perm-actions .btn-line{flex:1}
-.latency-badge{position:absolute;right:10px;top:52px;z-index:6;padding:5px 8px;border-radius:100px;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:#4ADE80;font-size:9px;font-weight:700;border:1px solid rgba(255,255,255,0.12);display:flex;align-items:center;gap:4px}
+.photo-viewer{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,0.88);backdrop-filter:blur(12px)}
+.photo-viewer.show{display:flex;animation:fadeIn 0.25s}
+.pv-backdrop{position:absolute;inset:0}
+.pv-content{position:relative;z-index:1;width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.pv-content img{width:100%;max-height:70vh;object-fit:contain;border-radius:16px;background:#111;border:1px solid rgba(255,255,255,0.12);box-shadow:0 24px 60px rgba(0,0,0,0.5)}
+.pv-actions{display:flex;gap:8px;width:100%;justify-content:center}
+.pv-close{padding:10px 18px;border-radius:100px;background:#fff;color:#111;border:0;font-size:12px;font-weight:700;cursor:pointer}
+.pv-download{padding:10px 18px;border-radius:100px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:12px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px}
 body.role-guest .hk-only{display:none !important}
 body.role-hk .guest-only{display:none !important}
 body.role-hk #guestCamStage{display:none !important}
@@ -187,37 +197,37 @@ body.role-guest #mainCamStage{display:none !important}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(21,155,90,0.35)}70%{box-shadow:0 0 0 8px rgba(21,155,90,0)}100%{box-shadow:0 0 0 0 rgba(21,155,90,0)}}
 @keyframes talkpulse{0%{box-shadow:0 0 0 6px rgba(255,59,48,0.18),0 12px 24px rgba(255,59,48,0.25)}50%{box-shadow:0 0 0 12px rgba(255,59,48,0),0 12px 24px rgba(255,59,48,0.25)}100%{box-shadow:0 0 0 6px rgba(255,59,48,0.18),0 12px 24px rgba(255,59,48,0.25)}}
 @keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 </head>
 <body class="role-guest">
 <div class="page-bg"></div>
-<nav class="nav"><div class="nav-inner"><div class="brand"><div class="logo">L</div><div class="brand-text"><b>LIVE ROOM</b><span>LOW LATENCY • FIX BLACK</span></div></div><div class="role-switch"><button type="button" class="role-btn active" data-role="guest">Tamu</button><button type="button" class="role-btn" data-role="hk">Housekeeping</button></div><div class="nav-right"><div class="secure-badge">🔒 Low Delay</div><div class="live-pill"><span class="dot"></span><span id="connStatus">Offline</span></div><div class="time" id="clock">--:--</div></div></div></nav>
-<div class="security-bar"><span>⚡ Low Latency 640p • Mic PTT Persistent • Anti Black Screen</span><span>Fix Final</span></div>
+<nav class="nav"><div class="nav-inner"><div class="brand"><div class="logo">L</div><div class="brand-text"><b>LIVE ROOM</b><span>PRO • SECURE P2P</span></div></div><div class="role-switch"><button type="button" class="role-btn active" data-role="guest">Tamu</button><button type="button" class="role-btn" data-role="hk">Housekeeping</button></div><div class="nav-right"><div class="secure-badge">🔒 Encrypted</div><div class="live-pill"><span class="dot"></span><span id="connStatus">Offline</span></div><div class="time" id="clock">--:--</div></div></div></nav>
 <main class="wrap">
 <div class="top-grid">
 <div class="connect-card">
-<div class="cc-head"><h3>Koneksi Aman 2 HP</h3><span class="cc-sub" style="font-size:11px;color:#8A8885">Kode & PIN sama di 2 HP — low latency fix</span></div>
+<div class="cc-head"><h3>Koneksi Aman 2 HP</h3><span class="cc-sub">Kode & PIN sama di 2 HP</span></div>
 <div class="cc-form"><div class="field"><label>Kode Kamar</label><input id="roomInput" value="101" maxlength="6"></div><div class="field"><label>PIN Keamanan</label><input id="pinInput" value="1234" maxlength="6" type="password"></div></div>
 <div class="qr-row"><div class="qr-box"><img id="qrImg" alt="QR"><span id="qrLabel">QR Kamar 101</span></div><div class="conn-info"><div class="conn-status" id="connBox"><span class="dot"></span><span id="connText">Belum terhubung</span></div><div class="viewer-real" id="viewerReal"><span>👁</span><strong id="viewerRealCount">0 penonton</strong><span style="color:#4ADE80;margin-left:4px">• Live</span></div></div></div>
 <div style="display:flex;gap:8px;margin-top:14px"><button type="button" class="btn-dark" style="flex:1" id="createSession">Buat Sesi Live (HK)</button><button type="button" class="btn-line" style="flex:1" id="joinSession">Hubungkan (Tamu)</button></div>
 </div>
-<div class="hero-card"><div class="hc-top"><span id="hcRoom">KAMAR 101</span><span class="badge wait" id="heroBadge">Menunggu</span></div><div class="big-progress"><div class="circle-wrap"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="circle-bg" fill="none" stroke="#F1EDE8" stroke-width="8"/><circle cx="50" cy="50" r="44" class="circle-fg" id="circleFg" fill="none" stroke="#111113" stroke-width="8" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="276.46"/></svg><div class="circle-inner"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div><div class="est"><span>Estimasi selesai</span><strong id="estText">Menunggu petugas</strong><div class="bar"><span id="estBar"></span></div></div></div><div class="room-photo-wrap"><img id="roomPhoto" alt="Kamar"><div class="photo-overlay"><span id="photoOverlayLabel">Foto Asli Kamar 101</span></div></div></div>
+<div class="hero-card"><div class="hc-top"><span id="hcRoom">KAMAR 101</span><span class="badge wait" id="heroBadge">Menunggu</span></div><div class="big-progress"><div class="circle-wrap"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="circle-bg" fill="none" stroke="#F1EDE8" stroke-width="8"/><circle cx="50" cy="50" r="44" class="circle-fg" id="circleFg" fill="none" stroke="#111113" stroke-width="8" stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="276.46"/></svg><div class="circle-inner"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div><div class="est"><span>Estimasi selesai</span><strong id="estText">Menunggu petugas</strong><div class="bar"><span id="estBar"></span></div></div></div><div class="room-photo-wrap" id="roomPhotoWrap"><img id="roomPhoto" alt="Kamar"><div class="photo-overlay"><span id="photoOverlayLabel">Foto Asli Kamar 101 • Tap untuk zoom</span></div></div></div>
 </div>
 <div class="main-grid">
 <div class="left-col"><div class="panel"><div class="panel-head"><h3>Alur Tamu</h3><p style="font-size:11px;color:#8A8885">7 langkah sampai masuk kamar</p></div><div class="flow" id="flow"><div class="flow-line"></div></div></div><div class="log-card"><div class="log-head" style="display:flex;justify-content:space-between"><h4>Live Log</h4><span style="color:#159B5A;font-size:10px">● Live</span></div><div class="log-list" id="logList"></div></div></div>
 <div class="right-col">
 <div class="camera-card">
-<div class="cam-head"><div><strong>Live Camera Housekeeping</strong><span id="camSub">Low latency 640p • Anti black screen</span></div><div class="cam-status" id="camStatus"><span></span> Offline</div></div>
+<div class="cam-head"><div><strong>Live Camera Housekeeping</strong><span id="camSub">Tap Flip untuk ganti kamera depan/belakang</span></div><div class="cam-status" id="camStatus"><span></span> Offline</div></div>
 <div class="viewer-bar hk-only" id="viewerBar"><div class="viewer-left"><span class="eye">👁</span><div><strong id="viewerCount">0 tamu menonton</strong><span id="viewerNames">Belum ada penonton</span></div></div><div class="viewer-avatars" id="viewerAvatars"></div></div>
-<div class="cam-stage" id="mainCamStage"><video id="hkVideo" autoplay muted playsinline></video><canvas id="watermarkCanvas" class="watermark"></canvas><div class="talking-indicator" id="guestTalkingIndicator"><span class="dot"></span> Tamu bicara...</div><div class="latency-badge" id="latencyBadge">⚡ 640p • 24fps • Low Delay</div><div class="cam-placeholder" id="camPlaceholder"><div class="ph-icon">◍</div><p>Kamera akan live di sini</p><span>Tap Nyalakan Kamera di bawah</span><button type="button" class="fix-link" id="fixBlackBtn">📷 Kamera hitam? Tap untuk perbaiki</button></div><div class="cam-overlay"><span class="overlay-tag" id="overlayTag">KAMAR 101 • LIVE • LOW DELAY</span><span class="overlay-time" id="overlayTime">--:--</span></div><button type="button" class="fs-btn" id="fsBtnMain">⛶</button><div class="viewer-pip" id="viewerPip"><span>👁</span><span id="pipCount">0</span></div></div>
+<div class="cam-stage" id="mainCamStage"><video id="hkVideo" autoplay muted playsinline></video><canvas id="watermarkCanvas" class="watermark"></canvas><div class="talking-indicator" id="guestTalkingIndicator"><span class="dot"></span> Tamu bicara...</div><div class="cam-placeholder" id="camPlaceholder"><div class="ph-icon">◍</div><p>Kamera akan live di sini</p><span>Tap Nyalakan Kamera di bawah</span><button type="button" class="fix-link" id="fixBlackBtn">📷 Kamera hitam? Tap perbaiki</button></div><div class="cam-overlay"><span class="overlay-tag" id="overlayTag">KAMAR 101 • LIVE</span><span class="overlay-time" id="overlayTime">--:--</span></div><button type="button" class="fs-btn" id="fsBtnMain">⛶</button><div class="viewer-pip" id="viewerPip"><span>👁</span><span id="pipCount">0</span></div></div>
 <div class="cam-actions hk-only">
-<button type="button" class="btn-dark btn-full" id="startCamBtn">📷 Nyalakan Kamera + Mic (Low Latency)</button>
-<div class="action-row"><button type="button" class="btn-line" id="snapBtn">📸 Foto Bukti</button><button type="button" class="btn-line" id="stopCamBtn">⏹ Matikan</button><button type="button" class="btn-line" id="blurBtn">🫧 Blur</button></div>
-<button type="button" class="btn-mic" id="hkTalkBtn"><span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara</b><small>Mode persistent — tanpa delay, lepas untuk mute</small></span></button>
+<button type="button" class="btn-dark btn-full" id="startCamBtn">📷 Nyalakan Kamera<div style="display:flex;flex-direction:column;align-items:flex-start"><span style="font-size:13px;font-weight:700;line-height:1">Nyalakan Kamera</span><small style="font-size:10px;opacity:0.7;font-weight:500">Kamera + Mic • Low Delay</small></div></button>
+<div class="action-row"><button type="button" class="btn-line" id="snapBtn">📸 Bukti</button><button type="button" class="btn-line" id="flipCamBtn">🔄 Flip</button><button type="button" class="btn-line" id="stopCamBtn">⏹ Matikan</button><button type="button" class="btn-line" id="blurBtn">🫧 Blur</button></div>
+<button type="button" class="btn-mic" id="hkTalkBtn"><span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara</b><small>Anti delay • Lepas untuk mute</small></span></button>
 </div>
-<div class="cam-actions guest-only"><div class="guest-live-box" style="background:#F7F3EE;border:1px solid #E8E3DD;border-radius:14px;padding:12px;width:100%"><div style="font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px"><span class="dot"></span> Video low delay + Mic PTT persistent</div><span style="display:block;margin-top:6px;font-size:10.5px;color:#8A8885">Tahan mic untuk bicara, sekarang tanpa delay karena koneksi tidak diputus</span><button type="button" class="btn-mic guest-mic" id="guestTalkBtn" style="margin-top:12px"><span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara ke Petugas</b><small>Anti delay — koneksi tetap nyambung</small></span></button></div></div>
-<div class="cam-stage guest-stage" id="guestCamStage"><video id="guestVideoMain" autoplay playsinline></video><canvas id="watermarkCanvasGuest" class="watermark"></canvas><div class="talking-indicator" id="hkTalkingIndicator"><span class="dot"></span> Petugas bicara...</div><div class="cam-placeholder" id="camPlaceholderGuest"><div class="ph-icon">◍</div><p>Menunggu siaran kamera...</p><span>Jika hitam, tunggu 2 detik auto-fix akan jalan</span><button type="button" class="fix-link" id="fixBlackGuestBtn">🔄 Kamera hitam? Tap perbaiki</button></div><div class="cam-overlay"><span class="overlay-tag">LIVE DARI HP PETUGAS</span><span style="font-size:9px;font-weight:700;background:rgba(21,155,90,0.9);color:#fff;padding:6px 9px;border-radius:100px">640p • Low Delay • Mic</span></div><button type="button" class="fs-btn" id="fsBtnGuest">⛶</button></div>
+<div class="cam-actions guest-only"><div class="guest-live-box" style="background:#F7F3EE;border:1px solid #E8E3DD;border-radius:14px;padding:12px;width:100%"><div style="font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px"><span class="dot"></span> Video low delay + Mic PTT</div><span style="display:block;margin-top:6px;font-size:10.5px;color:#8A8885">Tahan mic untuk bicara, tanpa delay</span><button type="button" class="btn-mic guest-mic" id="guestTalkBtn" style="margin-top:12px"><span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan Bicara ke Petugas</b><small>Push-to-talk anti-feedback</small></span></button></div></div>
+<div class="cam-stage guest-stage" id="guestCamStage"><video id="guestVideoMain" autoplay playsinline></video><canvas id="watermarkCanvasGuest" class="watermark"></canvas><div class="talking-indicator" id="hkTalkingIndicator"><span class="dot"></span> Petugas bicara...</div><div class="cam-placeholder" id="camPlaceholderGuest"><div class="ph-icon">◍</div><p>Menunggu siaran kamera...</p><span>Jika hitam, tunggu auto-fix</span><button type="button" class="fix-link" id="fixBlackGuestBtn">🔄 Kamera hitam? Perbaiki</button></div><div class="cam-overlay"><span class="overlay-tag">LIVE DARI HP PETUGAS</span><span style="font-size:9px;font-weight:700;background:rgba(21,155,90,0.9);color:#fff;padding:6px 9px;border-radius:100px">Mic • Flip Cam</span></div><button type="button" class="fs-btn" id="fsBtnGuest">⛶</button></div>
 <div class="photo-strip" id="photoStrip"></div>
 </div>
 <div class="checklist-card hk-only"><div class="cl-head"><h4>Checklist — Tap = Tamu lihat real-time</h4><span id="clProgress">0/4</span></div><div class="checklist" id="checklist"></div><button type="button" class="btn-dark btn-full" style="margin-top:10px" id="completeBtn">Tandai Siap & Kirim Notifikasi</button></div>
@@ -227,6 +237,7 @@ body.role-guest #mainCamStage{display:none !important}
 </main>
 <div class="toast" id="toast"><div style="width:32px;height:32px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-size:14px;flex-shrink:0">✦</div><div><strong>Kamar Siap!</strong><span style="font-size:11px;color:rgba(255,255,255,0.6)">Silakan ambil kunci di front office</span></div><button type="button" id="toastClose" style="margin-left:6px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(255,255,255,0.12);color:#fff;cursor:pointer">✕</button></div>
 <div class="perm-modal" id="permModal"><div class="perm-box"><div class="perm-icon">🔒</div><h3>Akses Kamera & Mic Diblokir</h3><p>Kamu menolak izin. Aktifkan lagi:</p><ol><li>Tap ikon gembok 🔒 di address bar</li><li>Pilih Setelan Situs / Izin</li><li>Allow Kamera & Mikrofon</li><li>Tap Coba Lagi</li></ol><div class="perm-actions"><button type="button" class="btn-dark" id="permRetry">Coba Lagi</button><button type="button" class="btn-line" id="permClose">Tutup</button></div></div></div>
+<div class="photo-viewer" id="photoViewer"><div class="pv-backdrop" id="pvBackdrop"></div><div class="pv-content"><img id="pvImg" alt="Foto Bukti"><div class="pv-actions"><button type="button" class="pv-close" id="pvClose">✕ Tutup</button><a id="pvDownload" class="pv-download" download="bukti-kamar.jpg">⬇ Download</a></div></div></div>
 <canvas id="hiddenCanvas" style="display:none"></canvas>
 <audio id="hkRemoteAudio" autoplay playsinline class="hidden-audio"></audio>
 <script>
@@ -249,7 +260,8 @@ let toastTimer = null;
 let needStreamTimer = null;
 let blackFixTimer = null;
 let lastMediaErrorType = '';
-const STORAGE_KEY = 'hotel-pro-v10-lowlatency';
+let currentFacing = 'environment';
+const STORAGE_KEY = 'hotel-pro-v11-final-flip';
 const defaultPhoto = window.__ROOM_PHOTO_URL__;
 const defaultState = { step: 1, progress: 0, tasks: [false, false, false, false], photos: [], log: [], photoUrl: defaultPhoto };
 let appState;
@@ -341,9 +353,9 @@ const hb = $('#heroBadge');
 if (hb) { hb.textContent = p >= 100 ? 'Siap' : p > 0 ? 'Dibersihkan' : 'Menunggu'; hb.className = 'badge ' + (p >= 100 ? 'ready' : p > 0 ? 'clean' : 'wait'); }
 $('#estText').textContent = p >= 100 ? 'Sudah siap!' : p > 0 ? `~ ${Math.max(1, Math.round((100 - p) / 15))} menit lagi` : 'Menunggu petugas';
 $('#hcRoom').textContent = `KAMAR ${roomCode}`;
-$('#overlayTag').textContent = `KAMAR ${roomCode} • LOW DELAY • 640p`;
+$('#overlayTag').textContent = `KAMAR ${roomCode} • LIVE`;
 $('#roomPhoto').src = appState.photoUrl;
-$('#photoOverlayLabel').textContent = `Foto Asli Kamar ${roomCode}`;
+$('#photoOverlayLabel').textContent = `Foto Asli Kamar ${roomCode} • Tap untuk zoom`;
 }
 function renderChecklist() {
 const tasks = ['Ganti Linen & Rapikan Bed', 'Bersihkan Kamar Mandi', 'Vacuum & Amenities', 'Final Check & Foto Bukti'];
@@ -382,6 +394,19 @@ gl.appendChild(grow);
 $('#clProgress').textContent = `${appState.tasks.filter(Boolean).length}/4`;
 $('#guestClProgress').textContent = appState.progress >= 100 ? 'Selesai' : appState.progress > 0 ? `${appState.progress}%` : 'Menunggu';
 }
+function openPhotoViewer(src) {
+const viewer = $('#photoViewer');
+const img = $('#pvImg');
+const dl = $('#pvDownload');
+if (!viewer || !img) return;
+img.src = src;
+if (dl) dl.href = src;
+viewer.classList.add('show');
+}
+function closePhotoViewer() {
+const viewer = $('#photoViewer');
+if (viewer) viewer.classList.remove('show');
+}
 function renderPhotos() {
 const strip = $('#photoStrip');
 if (!strip) return;
@@ -391,11 +416,21 @@ const d = document.createElement('div');
 d.className = 'photo';
 const img = document.createElement('img');
 img.src = src;
+img.loading = 'lazy';
+img.addEventListener('click', (e) => {
+e.stopPropagation();
+openPhotoViewer(src);
+});
 const del = document.createElement('button');
 del.type = 'button';
 del.className = 'del';
 del.textContent = '✕';
-del.addEventListener('click', () => { appState.photos.splice(i, 1); renderPhotos(); saveLocal(); });
+del.addEventListener('click', (e) => {
+e.stopPropagation();
+appState.photos.splice(i, 1);
+renderPhotos();
+saveLocal();
+});
 d.append(img, del);
 strip.appendChild(d);
 });
@@ -407,12 +442,12 @@ const hasRemote = !!(gm && gm.srcObject);
 $('#camPlaceholder').style.display = hasLocal ? 'none' : 'flex';
 $('#camPlaceholderGuest').style.display = hasRemote ? 'none' : 'flex';
 const cs = $('#camStatus');
-if (cs) { const live = (role === 'hk' && hasLocal) || (role === 'guest' && hasRemote); cs.innerHTML = live ? '<span class="on-dot"></span> Live Low Delay' : '<span></span> Offline'; cs.className = 'cam-status ' + (live ? 'on' : ''); }
+if (cs) { const live = (role === 'hk' && hasLocal) || (role === 'guest' && hasRemote); cs.innerHTML = live ? '<span class="on-dot"></span> Live • Flip OK' : '<span></span> Offline'; cs.className = 'cam-status ' + (live ? 'on' : ''); }
 const hkV = $('#hkVideo');
 if (hkV) {
 hkV.style.display = role === 'hk' && hasLocal ? 'block' : 'none';
 hkV.style.filter = blurEnabled ? 'blur(18px)' : 'none';
-if (hasLocal && !hkV.classList.contains('ready')) { hkV.classList.add('ready'); }
+if (hasLocal && !hkV.classList.contains('ready')) hkV.classList.add('ready');
 }
 if (gm) {
 gm.style.display = hasRemote ? 'block' : 'none';
@@ -466,10 +501,8 @@ if (gv.srcObject && gv.srcObject.id === stream.id) return;
 gv.srcObject = stream;
 gv.muted = false;
 gv.playsInline = true;
-const playPromise = gv.play();
-if (playPromise) playPromise.catch(() => {
-setTimeout(() => { gv.play().catch(() => {}); }, 500);
-});
+const p = gv.play();
+if (p) p.catch(() => { setTimeout(() => { gv.play().catch(() => {}); }, 500); });
 gv.onloadedmetadata = () => { gv.play().catch(() => {}); };
 renderCamera();
 startWatermark();
@@ -502,12 +535,12 @@ function handleMediaError(err, context) {
 const name = (err && err.name) || '';
 if (name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError') {
 showPermModal(context);
-} else if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
-alert(`Kamera/mic tidak ditemukan di HP ini — ${context}`);
-} else if (name === 'NotReadableError' || name === 'TrackStartError') {
-alert(`Kamera sedang dipakai aplikasi lain — tutup aplikasi kamera lain lalu Coba Lagi`);
+} else if (name === 'NotFoundError') {
+alert(`Kamera tidak ditemukan — ${context}`);
+} else if (name === 'NotReadableError') {
+alert(`Kamera dipakai aplikasi lain — tutup kamera lain lalu coba lagi`);
 } else {
-alert(`Gagal ${context}: ${err.message || err} — butuh HTTPS`);
+alert(`Gagal ${context}: ${err.message || err}`);
 }
 }
 function startBlackScreenFix() {
@@ -515,16 +548,8 @@ if (blackFixTimer) clearInterval(blackFixTimer);
 blackFixTimer = setInterval(() => {
 const hkV = $('#hkVideo');
 const gv = $('#guestVideoMain');
-if (role === 'hk' && hkV && hkV.srcObject) {
-if (hkV.videoWidth === 0 && hkV.readyState < 2) {
-hkV.play().catch(() => {});
-}
-}
-if (role === 'guest' && gv && gv.srcObject) {
-if (gv.videoWidth === 0 && gv.readyState < 2) {
-gv.play().catch(() => {});
-}
-}
+if (role === 'hk' && hkV && hkV.srcObject) { if (hkV.videoWidth === 0 && hkV.readyState < 2) hkV.play().catch(() => {}); }
+if (role === 'guest' && gv && gv.srcObject) { if (gv.videoWidth === 0 && gv.readyState < 2) gv.play().catch(() => {}); }
 }, 2000);
 }
 function createHkSession() {
@@ -537,25 +562,15 @@ updateQr();
 destroyPeer();
 const hkId = getHkId();
 try {
-peer = new Peer(hkId, {
-config: {
-iceServers: [
-{ urls: 'stun:stun.l.google.com:19302' },
-{ urls: 'stun:stun1.l.google.com:19302' },
-{ urls: 'stun:stun2.l.google.com:19302' },
-{ urls: 'stun:stun3.l.google.com:19302' },
-{ urls: 'stun:stun4.l.google.com:19302' }
-]
-}
-});
+peer = new Peer(hkId, { config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }, { urls: 'stun:stun2.l.google.com:19302' }] } });
 } catch (e) { alert('Gagal init peer: ' + e.message); return; }
 $('#connStatus').textContent = 'Membuat sesi...';
-$('#connText').textContent = `Membuat ID aman ${hkId}`;
+$('#connText').textContent = `Membuat ID ${hkId}`;
 peer.on('open', () => {
-$('#connStatus').textContent = 'Live Low Delay';
-$('#connText').textContent = `Sesi aktif • Kamar ${roomCode} • 640p 24fps`;
+$('#connStatus').textContent = 'Live';
+$('#connText').textContent = `Sesi aktif • Kamar ${roomCode} • PIN OK`;
 $('#connBox').className = 'conn-status on';
-pushLog(`Sesi low latency dibuat kamar ${roomCode}`);
+pushLog(`Sesi dibuat kamar ${roomCode}`);
 });
 peer.on('connection', conn => {
 conn.on('open', () => {
@@ -616,19 +631,10 @@ updateQr();
 destroyPeer();
 const hkId = getHkId();
 try {
-peer = new Peer({
-config: {
-iceServers: [
-{ urls: 'stun:stun.l.google.com:19302' },
-{ urls: 'stun:stun1.l.google.com:19302' },
-{ urls: 'stun:stun2.l.google.com:19302' },
-{ urls: 'stun:stun3.l.google.com:19302' }
-]
-}
-});
+peer = new Peer({ config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] } });
 } catch (e) { alert('Gagal init peer: ' + e.message); return; }
 $('#connStatus').textContent = 'Menghubungkan...';
-$('#connText').textContent = `Menghubungkan ke ${hkId} — low latency`;
+$('#connText').textContent = `Menghubungkan ke ${hkId}`;
 peer.on('open', () => {
 let conn;
 try { conn = peer.connect(hkId, { metadata: { pin: pinCode }, reliable: true }); } catch (e) { $('#connText').textContent = `Gagal connect: ${e.message}`; return; }
@@ -648,33 +654,32 @@ peer.on('call', call => {
 try { call.answer(guestMicStream || undefined); } catch {}
 call.on('stream', stream => {
 attachStreamToGuest(stream);
-$('#connStatus').textContent = 'Terhubung Low Delay';
-$('#connText').textContent = `Terhubung aman ke kamar ${roomCode} • 640p`;
+$('#connStatus').textContent = 'Terhubung';
+$('#connText').textContent = `Terhubung aman ke kamar ${roomCode}`;
 $('#connBox').className = 'conn-status on';
-$('#camStatus').innerHTML = '<span class="on-dot"></span> Live Low Delay';
+$('#camStatus').innerHTML = '<span class="on-dot"></span> Live';
 $('#camStatus').className = 'cam-status on';
 });
 });
-peer.on('error', err => { $('#connText').textContent = `Gagal: ${err.type || err.message} — cek PIN & sesi HK`; $('#connBox').className = 'conn-status err'; });
+peer.on('error', err => { $('#connText').textContent = `Gagal: ${err.type || err.message}`; $('#connBox').className = 'conn-status err'; });
 startNeedStreamLoop();
 }
-async function startCamera() {
+async function startCamera(facing = currentFacing) {
 if (role !== 'hk') return;
+currentFacing = facing;
 try {
 const stream = await navigator.mediaDevices.getUserMedia({
 video: {
 width: { ideal: 640, max: 640 },
 height: { ideal: 480, max: 480 },
 frameRate: { ideal: 24, max: 24 },
-facingMode: { ideal: 'environment' }
+facingMode: { ideal: currentFacing }
 },
 audio: {
 echoCancellation: true,
 noiseSuppression: true,
 autoGainControl: true,
 channelCount: 1,
-sampleRate: 48000,
-echoCancellationType: 'system',
 latency: 0
 }
 });
@@ -686,18 +691,25 @@ if (hkV) {
 hkV.srcObject = stream;
 hkV.muted = true;
 hkV.playsInline = true;
-const p = hkV.play();
-if (p) p.catch(() => {});
+hkV.play().catch(() => {});
 hkV.onloadedmetadata = () => { hkV.play().catch(() => {}); };
 }
 renderCamera();
-pushLog('Kamera low latency 640p 24fps siap — mic mute');
+pushLog(`Kamera ${currentFacing === 'environment' ? 'belakang' : 'depan'} aktif 640p — mic mute`);
 saveLocal();
 startWatermark();
 startBlackScreenFix();
 closeMediaConns();
 dataConns.filter(c => c && c.open && c.peer).forEach(c => { callGuest(c.peer); });
-} catch (e) { handleMediaError(e, 'kamera & mic low latency'); }
+const flipBtn = $('#flipCamBtn');
+if (flipBtn) flipBtn.innerHTML = currentFacing === 'environment' ? '🔄 Depan' : '🔄 Belakang';
+} catch (e) { handleMediaError(e, 'kamera & mic'); }
+}
+async function flipCamera() {
+if (role !== 'hk') return;
+const newFacing = currentFacing === 'environment' ? 'user' : 'environment';
+pushLog(`Ganti kamera ke ${newFacing === 'environment' ? 'belakang' : 'depan'}...`);
+await startCamera(newFacing);
 }
 async function startCameraFallback() {
 try {
@@ -708,7 +720,7 @@ localStream = stream;
 $('#hkVideo').srcObject = stream;
 $('#hkVideo').play().catch(() => {});
 renderCamera();
-pushLog('Kamera fallback 480p aktif — fix black screen');
+pushLog('Kamera fallback aktif');
 saveLocal();
 startWatermark();
 startBlackScreenFix();
@@ -732,7 +744,7 @@ function snapPhoto() {
 if (!localStream) { alert('Nyalakan kamera dulu'); return; }
 const v = $('#hkVideo');
 const c = $('#hiddenCanvas');
-if (!v || !c || !v.videoWidth) { alert('Kamera belum siap — tunggu video muncul'); return; }
+if (!v || !c || !v.videoWidth) { alert('Kamera belum siap'); return; }
 c.width = v.videoWidth;
 c.height = v.videoHeight;
 const ctx = c.getContext('2d');
@@ -741,13 +753,13 @@ ctx.fillStyle = 'rgba(0,0,0,0.6)';
 ctx.fillRect(0, c.height - 32, c.width, 32);
 ctx.fillStyle = '#fff';
 ctx.font = '12px Geist, sans-serif';
-ctx.fillText(`KAMAR ${roomCode} • ${new Date().toLocaleString('id-ID')} • LOW LATENCY`, 12, c.height - 12);
+ctx.fillText(`KAMAR ${roomCode} • ${new Date().toLocaleString('id-ID')} • P2P SECURE`, 12, c.height - 12);
 const data = c.toDataURL('image/jpeg', 0.72);
 appState.photos.unshift(data);
 if (appState.photos.length > 8) appState.photos.pop();
 renderPhotos();
 saveLocal();
-pushLog('Foto bukti diambil');
+pushLog('Foto bukti diambil — tap untuk zoom');
 }
 function startWatermark() {
 stopWatermark();
@@ -767,7 +779,7 @@ ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 ctx.clearRect(0, 0, rect.width, rect.height);
 ctx.fillStyle = 'rgba(255,255,255,0.82)';
 ctx.font = '11px Geist, sans-serif';
-ctx.fillText(`KAMAR ${roomCode} • ${new Date().toLocaleTimeString('id-ID')} • ⚡ 640p Low Delay • Mic PTT`, 12, rect.height - 12);
+ctx.fillText(`KAMAR ${roomCode} • ${new Date().toLocaleTimeString('id-ID')} • 🔒 P2P Encrypted • PIN OK`, 12, rect.height - 12);
 }
 draw();
 const id = setInterval(draw, 3000);
@@ -804,16 +816,16 @@ renderCamera();
 } catch (e) { handleMediaError(e, 'mikrofon'); return; }
 } else { localStream.getAudioTracks().forEach(t => { t.enabled = true; }); }
 const btn = $('#hkTalkBtn');
-if (btn) { btn.classList.add('talking'); btn.innerHTML = '<span class="mic-ico">🔴</span><span class="mic-text"><b>🔴 Bicara...</b><small>Lepas untuk mute — persistent low delay</small></span>'; }
+if (btn) { btn.classList.add('talking'); btn.innerHTML = '<span class="mic-ico">🔴</span><span class="mic-text"><b>🔴 Bicara...</b><small>Lepas untuk mute</small></span>'; }
 const payload = JSON.stringify({ type: 'talking', role, talking: true });
 dataConns.forEach(c => { try { if (c.open) c.send(payload); } catch {} });
-pushLog('🎙️ HK bicara low delay');
+pushLog('🎙️ HK bicara');
 dataConns.filter(c => c && c.open && c.peer).forEach(c => { if (!mediaConns.find(m => m.peer === c.peer)) callGuest(c.peer); });
 }
 function hkStopTalk() {
 if (localStream) localStream.getAudioTracks().forEach(t => { t.enabled = false; });
 const btn = $('#hkTalkBtn');
-if (btn) { btn.classList.remove('talking'); btn.innerHTML = '<span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara</b><small>Tahan tombol, bicara, lepas untuk mute</small></span>'; }
+if (btn) { btn.classList.remove('talking'); btn.innerHTML = '<span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara</b><small>Anti delay • Lepas untuk mute</small></span>'; }
 const payload = JSON.stringify({ type: 'talking', role, talking: false });
 dataConns.forEach(c => { try { if (c.open) c.send(payload); } catch {} });
 }
@@ -823,10 +835,10 @@ const stream = await ensureGuestMic();
 if (!stream) return;
 stream.getAudioTracks().forEach(t => { t.enabled = true; });
 const btn = $('#guestTalkBtn');
-if (btn) { btn.classList.add('talking'); btn.innerHTML = '<span class="mic-ico">🔴</span><span class="mic-text"><b>🔴 Mengirim suara...</b><small>Lepas untuk mute — no delay</small></span>'; }
+if (btn) { btn.classList.add('talking'); btn.innerHTML = '<span class="mic-ico">🔴</span><span class="mic-text"><b>🔴 Mengirim...</b><small>Lepas untuk mute</small></span>'; }
 const payload = JSON.stringify({ type: 'talking', role, talking: true });
 dataConns.forEach(c => { try { if (c.open) c.send(payload); } catch {} });
-pushLog('🎙️ Tamu bicara low delay');
+pushLog('🎙️ Tamu bicara');
 if (peer) {
 const hkId = getHkId();
 if (guestAudioConns.length === 0) {
@@ -840,7 +852,7 @@ if (mc) { guestAudioConns.push(mc); mc.on('stream', s => { attachStreamToGuest(s
 function guestStopTalk() {
 if (guestMicStream) guestMicStream.getAudioTracks().forEach(t => { t.enabled = false; });
 const btn = $('#guestTalkBtn');
-if (btn) { btn.classList.remove('talking'); btn.innerHTML = '<span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan untuk Bicara ke Petugas</b><small>Push-to-talk persistent low delay</small></span>'; }
+if (btn) { btn.classList.remove('talking'); btn.innerHTML = '<span class="mic-ico">🎙️</span><span class="mic-text"><b>Tahan Bicara ke Petugas</b><small>Push-to-talk anti-feedback</small></span>'; }
 const payload = JSON.stringify({ type: 'talking', role, talking: false });
 dataConns.forEach(c => { try { if (c.open) c.send(payload); } catch {} });
 }
@@ -877,22 +889,24 @@ const params = new URLSearchParams(location.search);
 if (params.get('room')) { roomCode = params.get('room'); $('#roomInput').value = roomCode; }
 if (params.get('pin')) { pinCode = params.get('pin'); $('#pinInput').value = pinCode; }
 updateQr();
-if (!appState.log.length) { appState.log = [{ t: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }), msg: 'Low latency 640p fix + anti black screen siap' }]; saveLocal(); }
+if (!appState.log.length) { appState.log = [{ t: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }), msg: 'Sistem siap • Flip cam • Zoom foto bukti' }]; saveLocal(); }
 $$('.role-btn').forEach(b => b.addEventListener('click', () => setRole(b.dataset.role)));
 $('#createSession').addEventListener('click', createHkSession);
 $('#joinSession').addEventListener('click', joinAsGuest);
-$('#startCamBtn').addEventListener('click', startCamera);
+$('#startCamBtn').addEventListener('click', () => startCamera(currentFacing));
+$('#flipCamBtn').addEventListener('click', flipCamera);
 $('#stopCamBtn').addEventListener('click', stopCamera);
 $('#snapBtn').addEventListener('click', snapPhoto);
 $('#blurBtn').addEventListener('click', () => {
 blurEnabled = !blurEnabled;
 const v = $('#hkVideo');
 if (v) v.style.filter = blurEnabled ? 'blur(18px)' : 'none';
-$('#blurBtn').textContent = blurEnabled ? 'Matikan Blur' : '🫧 Blur';
+$('#blurBtn').innerHTML = blurEnabled ? 'Matikan Blur' : '🫧 Blur';
 pushLog(blurEnabled ? 'Blur aktif' : 'Blur mati');
 });
-$('#fixBlackBtn').addEventListener('click', () => { pushLog('Coba perbaiki kamera hitam...'); startCameraFallback(); });
+$('#fixBlackBtn').addEventListener('click', () => { pushLog('Perbaiki kamera hitam...'); startCameraFallback(); });
 $('#fixBlackGuestBtn').addEventListener('click', () => { pushLog('Request stream ulang...'); sendNeedStream(); startNeedStreamLoop(); });
+$('#roomPhotoWrap').addEventListener('click', () => { openPhotoViewer($('#roomPhoto').src); });
 $('#completeBtn').addEventListener('click', () => {
 appState.tasks = [true, true, true, true];
 appState.progress = 100;
@@ -905,9 +919,12 @@ toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 3500);
 pushLog(`Kamar ${roomCode} siap`);
 });
 $('#toastClose').addEventListener('click', () => $('#toast').classList.remove('show'));
-$('#permRetry').addEventListener('click', () => { hidePermModal(); if (lastMediaErrorType.includes('kamera') || lastMediaErrorType.includes('mic')) { if (lastMediaErrorType.includes('kamera')) startCamera(); else if (role === 'guest') guestStartTalk(); else hkStartTalk(); } else { startCamera(); } });
+$('#permRetry').addEventListener('click', () => { hidePermModal(); if (lastMediaErrorType.includes('kamera') || lastMediaErrorType.includes('mic')) { if (lastMediaErrorType.includes('kamera')) startCamera(currentFacing); else if (role === 'guest') guestStartTalk(); else hkStartTalk(); } else { startCamera(currentFacing); } });
 $('#permClose').addEventListener('click', hidePermModal);
 $('#permModal').addEventListener('click', (e) => { if (e.target.id === 'permModal') hidePermModal(); });
+$('#pvClose').addEventListener('click', closePhotoViewer);
+$('#pvBackdrop').addEventListener('click', closePhotoViewer);
+$('#photoViewer').addEventListener('click', (e) => { if (e.target.id === 'photoViewer') closePhotoViewer(); });
 function toggleFs(el) { if (!el) return; if (!document.fullscreenElement) { el.requestFullscreen().catch(() => {}); } else { document.exitFullscreen().catch(() => {}); } }
 const mainStage = $('#mainCamStage');
 const guestStage = $('#guestCamStage');
