@@ -1,6 +1,0 @@
-requests
-python-socketio[client]
-openpyxl
-brotli
-httpx==0.27.0
-beautifulsoup4==4.12.3
