@@ -22,55 +22,55 @@
 </script><script>window.Intl=window.Intl||{};Intl.t=function(s){return(Intl._locale&&Intl._locale[s])||s;};</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIVE ROOM STATUS — Real-time Housekeeping Cam</title>
+<title>LIVE ROOM STATUS — 2 HP Realtime</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 </head>
-<body>
+<body class="role-guest">
 <div class="bg-mesh"></div>
 <nav class="nav">
 <div class="nav-inner">
-<div class="brand"><div class="mark">L</div><div><b>LIVE ROOM</b><span>STATUS • REALTIME</span></div></div>
-<div class="role-switch" id="roleSwitch">
-<button class="role-btn active" data-role="guest">Tamu</button>
-<button class="role-btn" data-role="fo">Front Office</button>
-<button class="role-btn" data-role="hk">Housekeeping</button>
+<div class="brand"><div class="mark">L</div><div><b>LIVE ROOM</b><span>REALTIME • 2 HP</span></div></div>
+<div class="role-switch">
+<button class="role-btn active" data-role="guest">Mode Tamu</button>
+<button class="role-btn" data-role="hk">Mode Housekeeping</button>
 </div>
-<div class="nav-meta"><div class="live-pill"><span class="dot-live"></span><span>Live</span></div><div class="time" id="clock">--:--</div></div>
+<div class="nav-meta"><div class="live-pill"><span class="dot-live"></span><span id="connStatus">Offline</span></div><div class="time" id="clock">--:--</div></div>
 </div>
 </nav>
 <main class="wrap">
-<div class="role-banner" id="roleBanner">
+<div class="role-banner">
 <div class="rb-icon" id="rbIcon">👋</div>
-<div class="rb-text"><h2 id="rbTitle">Mode Tamu — Lihat Kamar Anda Disiapkan Live</h2><p id="rbDesc">Pantau progres dan kamera housekeeping secara real-time. Buka tab lain sebagai Housekeeping untuk simulasi 2 HP.</p></div>
-<div class="rb-action"><button class="btn-soft" id="howBtn">Cara Kerja</button></div>
+<div class="rb-text"><h2 id="rbTitle">Tamu — Lihat kamar disiapkan live dari HP petugas</h2><p id="rbDesc">Cukup masukkan kode kamar yang sama di 2 HP. Housekeeping nyalakan kamera, tamu langsung lihat.</p></div>
 </div>
 <section class="hero-grid">
 <div class="hero-main">
-<h1><span class="serif">Tamu datang,</span> sistem langsung gerak.</h1>
-<p>Alur super jelas: Check-in → Cek kamar → Jika belum siap, tamu nonton progres live + kamera. Housekeeping checklist dari HP.</p>
-<div class="hero-steps-mini"><span><i>01</i> Datang</span><span class="arrow">→</span><span><i>02</i> Cek Status</span><span class="arrow">→</span><span><i>03</i> Live Bersih</span><span class="arrow">→</span><span><i>04</i> Siap</span></div>
+<h1><span class="serif">Kamar siap,</span> kamu lihat sendiri.</h1>
+<p>Tidak perlu tanya resepsionis lagi. Progres dan kamera live dari petugas housekeeping tampil real-time di HP tamu.</p>
+<div class="hero-steps-mini"><span><i>01</i> Datang</span><span class="arrow">→</span><span><i>02</i> Live Bersih</span><span class="arrow">→</span><span><i>03</i> Siap</span></div>
 </div>
 <div class="hero-card">
-<div class="hc-top"><span>KAMAR 301 • Deluxe King</span><span class="badge" id="heroBadge">Menunggu</span></div>
-<div class="big-progress"><div class="circle-wrap"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="bg"/><circle cx="50" cy="50" r="44" class="fg" id="circleFg"/></svg><div class="circle-inner"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div><div class="est"><span>Estimasi selesai</span><strong id="estText">~ 6 menit lagi</strong><div class="bar"><span id="estBar"></span></div></div></div>
+<div class="hc-top"><span id="hcRoom">KAMAR 301 • Deluxe</span><span class="badge wait" id="heroBadge">Menunggu</span></div>
+<div class="big-progress">
+<div class="circle-wrap"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" class="bg"/><circle cx="50" cy="50" r="44" class="fg" id="circleFg"/></svg><div class="circle-inner"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div>
+<div class="est"><span>Estimasi selesai</span><strong id="estText">Menunggu petugas</strong><div class="bar"><span id="estBar"></span></div></div>
+</div>
 </div>
 </section>
 <section class="main-grid">
 <div class="left-col">
 <div class="panel">
-<div class="panel-head"><h3>Alur Perjalanan Tamu</h3><p>Ikuti 8 langkah sampai masuk kamar</p></div>
+<div class="panel-head"><h3>Alur — Jelas & Tanpa Tebak</h3><p>Tamu datang sampai masuk kamar</p></div>
 <div class="flow" id="flow"><div class="flow-line"></div></div>
 </div>
-<div class="panel explain">
-<h4>Kenapa ini mudah dipahami?</h4>
-<ul>
-<li><b>Tamu:</b> cukup lihat 1 angka % + video live, tidak perlu tanya resepsionis lagi.</li>
-<li><b>Housekeeping:</b> cukup checklist 4 tahap dari HP, kamera otomatis share ke tamu.</li>
-<li><b>Front Office:</b> semua kamar update otomatis, bisa tandai siap manual jika perlu.</li>
-</ul>
+<div class="connect-card">
+<h4>Koneksi 2 HP</h4>
+<div class="conn-row"><div><span>Kode Kamar</span><div class="input-wrap"><input id="roomInput" value="301" maxlength="6"><button class="btn-mini" id="saveRoom">Pakai</button></div></div><div class="qr-box" id="qrBox"><img id="qrImg" alt="QR"><span id="qrLabel">QR untuk tamu</span></div></div>
+<div class="conn-status" id="connBox"><span class="dot"></span><span id="connText">Belum terhubung — Housekeeping harus tap Buat Sesi dulu</span></div>
+<div class="conn-actions"><button class="btn-dark" id="createSession">Buat Sesi Live (HP Housekeeping)</button><button class="btn-line" id="joinSession">Hubungkan (HP Tamu)</button></div>
 </div>
 </div>
 <div class="right-col">
@@ -80,67 +80,50 @@
 <div class="cam-stage">
 <video id="hkVideo" autoplay muted playsinline></video>
 <video id="guestVideo" autoplay playsinline></video>
-<div class="cam-placeholder" id="camPlaceholder"><div class="ph-icon">◍</div><p>Kamera akan muncul di sini saat Housekeeping menyalakan kamera</p><span>Tips: Buka 2 tab, 1 Housekeeping, 1 Tamu</span></div>
-<div class="cam-overlay"><span class="overlay-tag">KAMAR 301 • LIVE</span><span class="overlay-time" id="overlayTime">00:00</span></div>
+<div class="cam-placeholder" id="camPlaceholder"><div class="ph-icon">◍</div><p id="phText">Kamera akan live di sini setelah Housekeeping buat sesi dan nyalakan kamera</p><span>Pakai 2 HP berbeda, kode kamar sama</span></div>
+<div class="cam-overlay"><span class="overlay-tag" id="overlayTag">KAMAR 301 • LIVE</span><span class="overlay-time" id="overlayTime">--:--</span></div>
 </div>
-<div class="cam-actions" id="camActionsGuest"><div class="live-note"><span class="dot"></span> Real-time via browser — tidak butuh server</div></div>
-<div class="cam-actions hk-only" id="camActionsHk">
-<button class="btn-dark" id="startCamBtn">Nyalakan Kamera</button>
-<button class="btn-line" id="snapBtn">Ambil Foto Bukti</button>
-<button class="btn-line" id="stopCamBtn">Matikan</button>
-</div>
+<div class="cam-actions hk-only"><button class="btn-dark" id="startCamBtn">Nyalakan Kamera</button><button class="btn-line" id="snapBtn">Foto Bukti</button><button class="btn-line" id="stopCamBtn">Matikan</button></div>
+<div class="cam-actions guest-only"><div class="live-note"><span class="dot"></span> Terhubung langsung ke HP petugas via P2P — tanpa server rekam</div></div>
 <div class="photo-strip" id="photoStrip"></div>
 </div>
 <div class="room-card">
-<div class="room-top"><div class="room-id"><span>KAMAR</span><strong>301</strong></div><div class="status-pill" id="statusPill">Menunggu</div></div>
+<div class="room-top"><div class="room-id"><span>KAMAR</span><strong id="roomNumber">301</strong></div><div class="status-pill wait" id="statusPill">Menunggu</div></div>
 <div class="room-visual"><div class="rv-img"></div><div class="rv-grad"></div><div class="rv-bottom"><span id="rvLabel">Belum Dibersihkan</span><strong id="rvPercent">0%</strong></div></div>
-<div class="room-meta"><div><span>Tamu</span><strong>Tn. Ridwan +1</strong></div><div><span>Petugas</span><strong>Sari • Lantai 3</strong></div></div>
+<div class="room-meta"><div><span>Tamu</span><strong>Tn. Ridwan +1</strong></div><div><span>Petugas</span><strong id="hkName">Sari • Lantai 3</strong></div></div>
 </div>
-<div class="checklist-card hk-only" id="checklistCard">
-<div class="cl-head"><h4>Tugas Housekeeping — Tap untuk update tamu</h4><span id="clProgress">0/4</span></div>
-<div class="checklist" id="checklist"></div>
-<button class="btn-primary full" id="completeBtn">Tandai Kamar Siap & Kirim Notifikasi</button>
-</div>
-<div class="checklist-card guest-only" id="guestChecklist">
-<div class="cl-head"><h4>Yang sedang dikerjakan</h4><span id="guestClProgress">Menunggu</span></div>
-<div class="checklist readonly" id="guestList"></div>
-</div>
-<div class="action-card fo-only">
-<h4>Panel Front Office</h4>
-<p>Kontrol cepat jika perlu intervensi manual</p>
-<div class="fo-grid"><button class="btn-line" id="foAssign">Tugaskan HK</button><button class="btn-dark" id="foReady">Paksa Siap</button><button class="btn-line" id="foReset">Reset Alur</button></div>
-</div>
-<div class="log-card"><div class="log-head"><h4>Live Log Real-time</h4><span class="live-dot-mini">●</span></div><div class="log-list" id="logList"></div></div>
+<div class="checklist-card hk-only"><div class="cl-head"><h4>Tap tiap selesai — Tamu langsung lihat</h4><span id="clProgress">0/4</span></div><div class="checklist" id="checklist"></div><button class="btn-primary full" id="completeBtn">Tandai Siap & Notifikasi Tamu</button></div>
+<div class="checklist-card guest-only"><div class="cl-head"><h4>Progres Pembersihan</h4><span id="guestClProgress">Menunggu</span></div><div class="checklist readonly" id="guestList"></div></div>
+<div class="log-card"><div class="log-head"><h4>Live Log</h4><span class="live-dot-mini">● realtime</span></div><div class="log-list" id="logList"></div></div>
 </div>
 </div>
 </section>
-<div class="how-modal" id="howModal">
-<div class="how-box"><div class="how-head"><h3>Cara pakai real-time 2 HP</h3><button id="closeHow">✕</button></div><div class="how-body"><div class="how-step"><span>1</span><div><b>Buka link ini di 2 tab</b><p>Tab A Housekeeping, Tab B Tamu</p></div></div><div class="how-step"><span>2</span><div><b>Housekeeping tap Nyalakan Kamera</b><p>Izin kamera, otomatis muncul di Tamu via WebRTC</p></div></div><div class="how-step"><span>3</span><div><b>Checklist progres</b><p>Setiap tap, progres Tamu langsung berubah tanpa refresh</p></div></div></div></div>
-</div>
 </main>
-<div class="toast" id="toast"><div class="toast-icon">✦</div><div><strong>Kamar 301 Siap!</strong><span>Silakan ambil kunci di front office</span></div><button id="toastClose">✕</button></div>
+<div class="toast" id="toast"><div class="toast-icon">✦</div><div><strong>Kamar Siap!</strong><span>Silakan ambil kunci di front office</span></div><button id="toastClose">✕</button></div>
 <canvas id="hiddenCanvas" style="display:none"></canvas>
 <script>
 const $=s=>document.querySelector(s);
 const $$=s=>document.querySelectorAll(s);
-const syncChannel=new BroadcastChannel('hotel-sync-v2');
-const rtcChannel=new BroadcastChannel('hotel-rtc-v2');
 let role='guest';
+let roomCode='301';
+let peer=null;
+let dataConns=[];
 let localStream=null;
-let pc=null;
-let remotePc=null;
-let isOfferer=false;
-let appState=JSON.parse(localStorage.getItem('hotel-state-v2')||'{"step":0,"progress":0,"status":"waiting","tasks":[false,false,false,false],"photos":[],"camOn":false,"log":[]}');
-function saveState(){
-localStorage.setItem('hotel-state-v2',JSON.stringify(appState));
-syncChannel.postMessage({type:'state',data:appState});
+let appState=JSON.parse(localStorage.getItem('hotel-v3')||'{"step":1,"progress":0,"tasks":[false,false,false,false],"photos":[],"log":[]}');
+function saveLocal(){
+localStorage.setItem('hotel-v3',JSON.stringify(appState));
+sendState();
 }
-function logMsg(msg){
-const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+function sendState(){
+const payload=JSON.stringify({type:'state',data:appState});
+dataConns.forEach(c=>{try{if(c.open) c.send(payload)}catch(e){}});
+}
+function pushLog(msg){
+const t=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
 appState.log.unshift({t,msg});
 if(appState.log.length>20) appState.log.pop();
 renderLog();
-saveState();
+saveLocal();
 }
 function renderLog(){
 const list=$('#logList');
@@ -152,30 +135,35 @@ d.innerHTML=`<span>${l.t}</span><span>${l.msg}</span>`;
 list.appendChild(d);
 });
 }
+function getHkId(){
+return `hotel-room-${roomCode}-hk`;
+}
 function setRole(r){
 role=r;
 document.body.className='role-'+r;
 $$('.role-btn').forEach(b=>b.classList.toggle('active',b.dataset.role===r));
-const info={
-guest:{icon:'👋',title:'Mode Tamu — Lihat Kamar Anda Disiapkan Live',desc:'Pantau progres dan kamera housekeeping secara real-time. Buka tab lain sebagai Housekeeping untuk simulasi 2 HP.'},
-fo:{icon:'🏨',title:'Mode Front Office — Kontrol Semua Kamar',desc:'Lihat status, tugaskan housekeeping, dan tandai siap manual jika perlu.'},
-hk:{icon:'🧹',title:'Mode Housekeeping — Kerja dari HP + Kamera',desc:'Nyalakan kamera, checklist 4 tahap, foto bukti otomatis terlihat oleh tamu.'}
-};
-$('#rbIcon').textContent=info[r].icon;
-$('#rbTitle').textContent=info[r].title;
-$('#rbDesc').textContent=info[r].desc;
+if(r==='guest'){
+$('#rbIcon').textContent='👋';
+$('#rbTitle').textContent='Tamu — Lihat kamar disiapkan live dari HP petugas';
+$('#rbDesc').textContent='Masukkan kode kamar 301 di HP tamu, lalu tap Hubungkan. Kamera petugas akan muncul otomatis.';
+$('#phText').textContent='Kamera akan live di sini setelah petugas buat sesi dan nyalakan kamera';
+}else{
+$('#rbIcon').textContent='🧹';
+$('#rbTitle').textContent='Housekeeping — Siaran live dari HP kamu';
+$('#rbDesc').textContent='Masukkan kode kamar yang sama, tap Buat Sesi Live, lalu Nyalakan Kamera. Tamu di HP lain akan langsung melihat.';
+$('#phText').textContent='Preview kamera kamu akan muncul di sini setelah dinyalakan';
+}
 renderAll();
 }
 function renderFlow(){
 const steps=[
-{title:'Tamu Datang (Check-in)',desc:'Tamu tiba di lobi, verifikasi identitas',tag:'Arrival',icon:'🛬'},
-{title:'FO Mengecek Status Kamar',desc:'Sistem cek kebersihan & ketersediaan otomatis',tag:'System',icon:'💻'},
-{title:'Status Ditampilkan di Layar',desc:'Jika belum siap, status live muncul di app tamu',tag:'Display',icon:'📱'},
-{title:'Housekeeping Membersihkan',desc:'Petugas menerima tugas & nyalakan kamera live',tag:'HK',icon:'🧹'},
-{title:'Progres 25% → 100%',desc:'Update otomatis tiap tahap + foto bukti',tag:'Progress',icon:'📊'},
-{title:'Notifikasi Kamar Siap',desc:'Push notifikasi: Kamar Anda Sudah Siap',tag:'Notify',icon:'🔔'},
-{title:'Tamu Terima Kunci',desc:'Kunci kartu / digital aktif',tag:'Key',icon:'🔑'},
-{title:'Tamu Masuk Kamar',desc:'Status jadi Occupied, alur selesai',tag:'Done',icon:'🚪'}
+{title:'Tamu Datang',desc:'Check-in di resepsionis',tag:'Datang',icon:'🛬'},
+{title:'Cek Status Kamar',desc:'Sistem cek apakah siap atau belum',tag:'Cek',icon:'💻'},
+{title:'Tampilkan Live Status',desc:'Tamu lihat progres di HP',tag:'Live',icon:'📱'},
+{title:'Housekeeping Bersihkan',desc:'Petugas checklist + kamera on',tag:'Bersih',icon:'🧹'},
+{title:'Progres 25% → 100%',desc:'Update tiap tahap + foto bukti',tag:'Progress',icon:'📊'},
+{title:'Kamar Siap',desc:'Notifikasi: Kamar Anda Sudah Siap',tag:'Siap',icon:'🔔'},
+{title:'Tamu Masuk',desc:'Terima kunci & masuk kamar',tag:'Masuk',icon:'🚪'}
 ];
 const flow=$('#flow');
 flow.innerHTML='<div class="flow-line"></div>';
@@ -192,7 +180,8 @@ function renderProgress(){
 const p=appState.progress;
 $('#bigPercent').textContent=p+'%';
 $('#rvPercent').textContent=p+'%';
-$('#circleFg').style.strokeDashoffset=276-(276*p/100);
+const offset=276-(276*p/100);
+$('#circleFg').style.strokeDashoffset=offset;
 $('#estBar').style.width=p+'%';
 const labels=['Belum Mulai','Mulai Dibersihkan','Kamar Mandi','Finishing','Siap Ditempati'];
 let idx=0;
@@ -206,14 +195,17 @@ $('#heroBadge').textContent=p>=100?'Siap':p>0?'Dibersihkan':'Menunggu';
 $('#heroBadge').className='badge '+(p>=100?'ready':p>0?'clean':'wait');
 $('#statusPill').textContent=p>=100?'Siap':p>0?'Dibersihkan':'Menunggu';
 $('#statusPill').className='status-pill '+(p>=100?'ready':p>0?'clean':'wait');
-$('#estText').textContent=p>=100?'Sudah siap!':p>0?`~ ${Math.max(1,Math.round((100-p)/18))} menit lagi`:'Menunggu petugas';
+$('#estText').textContent=p>=100?'Sudah siap!':p>0?`~ ${Math.max(1,Math.round((100-p)/15))} menit lagi`:'Menunggu petugas';
+$('#hcRoom').textContent=`KAMAR ${roomCode} • Deluxe`;
+$('#roomNumber').textContent=roomCode;
+$('#overlayTag').textContent=`KAMAR ${roomCode} • LIVE`;
 }
 function renderChecklist(){
 const tasks=[
-'Ganti Linen & Rapikan Bed (25%)',
-'Bersihkan Kamar Mandi & Toilet (50%)',
-'Lengkapi Amenities, Vacuum (75%)',
-'Final Check & Foto Bukti (100%)'
+'Ganti Linen & Rapikan Bed',
+'Bersihkan Kamar Mandi & Toilet',
+'Vacuum & Lengkapi Amenities',
+'Final Check & Foto Bukti'
 ];
 const cl=$('#checklist');
 const gl=$('#guestList');
@@ -221,25 +213,25 @@ cl.innerHTML='';
 gl.innerHTML='';
 tasks.forEach((t,i)=>{
 const checked=appState.tasks[i];
+const perc=[25,50,75,100][i];
 const row=document.createElement('div');
 row.className='c-item'+(checked?' checked':'');
-row.innerHTML=`<button class="c-box">${checked?'✓':''}</button><div class="c-text"><strong>${t}</strong><span>${checked?'Selesai':'Tap untuk selesai'}</span></div><span class="c-perc">${[25,50,75,100][i]}%</span>`;
+row.innerHTML=`<button class="c-box">${checked?'✓':''}</button><div class="c-text"><strong>${t}</strong><span>${checked?'Selesai':'Tap jika sudah'}</span></div><span class="c-perc">${perc}%</span>`;
 row.onclick=()=>{
 if(role!=='hk') return;
 appState.tasks[i]=!appState.tasks[i];
 const maxIdx=Math.max(...appState.tasks.map((v,idx)=>v?idx:-1));
 appState.progress=maxIdx===-1?0:[25,50,75,100][maxIdx];
 if(appState.tasks.every(Boolean)) appState.progress=100;
-appState.step=appState.progress===0?2:appState.progress<100?5:6;
+appState.step=appState.progress===0?2:appState.progress<100?4:6;
 if(appState.progress===100){
 $('#toast').classList.add('show');
-logMsg('Kamar 301 siap — checklist lengkap');
-}
-else{
-logMsg(`Progres ${appState.progress}% — ${t} selesai`);
+pushLog(`Kamar ${roomCode} siap 100%`);
+}else{
+pushLog(`Progres ${appState.progress}% — ${t}`);
 }
 renderAll();
-saveState();
+saveLocal();
 };
 cl.appendChild(row);
 const grow=document.createElement('div');
@@ -261,14 +253,14 @@ strip.appendChild(d);
 });
 }
 function renderCamera(){
-const hasStream=!!localStream;
-$('#camPlaceholder').style.display=(hasStream||appState.camOn)?'none':'flex';
-$('#camStatus').innerHTML=hasStream?'<span class="on"></span> Live':'<span></span> Offline';
-$('#camStatus').className='cam-status '+(hasStream?'on':'');
-$('#camSub').textContent=hasStream?'Siaran langsung aktif':'Belum ada siaran';
-$('#hkVideo').style.display=role==='hk'&&hasStream?'block':'none';
-$('#guestVideo').style.display=role!=='hk'?'block':'none';
-if(role==='hk'&&hasStream){$('#hkVideo').srcObject=localStream;}
+const has=!!localStream;
+$('#camPlaceholder').style.display=has?'none':'flex';
+$('#camStatus').innerHTML=has?'<span class="on"></span> Live':'<span></span> Offline';
+$('#camStatus').className='cam-status '+(has?'on':'');
+$('#camSub').textContent=has?'Siaran langsung aktif':'Belum ada siaran';
+$('#hkVideo').style.display=role==='hk'&&has?'block':'none';
+$('#guestVideo').style.display=role==='guest'?'block':'none';
+if(role==='hk'&&has) $('#hkVideo').srcObject=localStream;
 }
 function renderAll(){
 renderFlow();
@@ -278,29 +270,139 @@ renderPhotos();
 renderCamera();
 renderLog();
 }
+function updateQr(){
+const link=`${location.origin}${location.pathname}?room=${roomCode}`;
+$('#qrImg').src=`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(link)}`;
+$('#qrLabel').textContent=`QR Kamar ${roomCode}`;
+}
+function destroyPeer(){
+if(peer){try{peer.destroy()}catch(e){}}
+peer=null;
+dataConns=[];
+$('#connStatus').textContent='Offline';
+$('#connText').textContent='Belum terhubung';
+$('#connBox').className='conn-status';
+}
+function createHkSession(){
+roomCode=$('#roomInput').value.trim()||'301';
+localStorage.setItem('roomCode',roomCode);
+updateQr();
+destroyPeer();
+const hkId=getHkId();
+peer=new Peer(hkId,{config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
+$('#connStatus').textContent='Membuat sesi...';
+$('#connText').textContent=`Membuat ID ${hkId} — tunggu tamu hubungkan`;
+peer.on('open',id=>{
+$('#connStatus').textContent='Live Menunggu Tamu';
+$('#connText').textContent=`Sesi aktif: ${id} — buka HP tamu, kode ${roomCode}, tap Hubungkan`;
+$('#connBox').className='conn-status on';
+pushLog(`Sesi live dibuat untuk kamar ${roomCode}`);
+});
+peer.on('connection',conn=>{
+handleDataConnection(conn);
+});
+peer.on('call',call=>{
+call.answer(localStream||undefined);
+call.on('stream',()=>{});
+});
+peer.on('error',err=>{
+$('#connText').textContent=`Error: ${err.type} — coba kode lain atau refresh`;
+$('#connBox').className='conn-status err';
+});
+}
+function joinAsGuest(){
+roomCode=$('#roomInput').value.trim()||'301';
+localStorage.setItem('roomCode',roomCode);
+updateQr();
+destroyPeer();
+const hkId=getHkId();
+peer=new Peer({config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
+$('#connStatus').textContent='Menghubungkan...';
+$('#connText').textContent=`Menghubungkan ke ${hkId}`;
+peer.on('open',myId=>{
+const conn=peer.connect(hkId);
+handleDataConnection(conn);
+const call=peer.call(hkId);
+if(call){
+call.on('stream',stream=>{
+$('#guestVideo').srcObject=stream;
+$('#guestVideo').style.display='block';
+$('#camPlaceholder').style.display='none';
+$('#camStatus').innerHTML='<span class="on"></span> Live dari HP Petugas';
+$('#camStatus').className='cam-status on';
+$('#camSub').textContent='Melihat langsung dari HP housekeeping';
+$('#connStatus').textContent='Terhubung Live';
+$('#connText').textContent=`Terhubung ke kamar ${roomCode} — video akan muncul saat petugas nyalakan kamera`;
+$('#connBox').className='conn-status on';
+});
+call.on('error',()=>{});
+}
+});
+peer.on('error',err=>{
+$('#connText').textContent=`Gagal hubung: ${err.type} — pastikan HP housekeeping sudah Buat Sesi dulu`;
+$('#connBox').className='conn-status err';
+});
+peer.on('call',call=>{
+call.answer();
+call.on('stream',stream=>{
+$('#guestVideo').srcObject=stream;
+$('#guestVideo').style.display='block';
+$('#camPlaceholder').style.display='none';
+$('#camStatus').innerHTML='<span class="on"></span> Live';
+});
+});
+}
+function handleDataConnection(conn){
+dataConns.push(conn);
+conn.on('open',()=>{
+if(role==='hk'){
+conn.send(JSON.stringify({type:'state',data:appState}));
+}
+$('#connStatus').textContent='Terhubung';
+$('#connBox').className='conn-status on';
+});
+conn.on('data',raw=>{
+try{
+const msg=JSON.parse(raw);
+if(msg.type==='state'){
+appState=msg.data;
+localStorage.setItem('hotel-v3',JSON.stringify(appState));
+renderAll();
+}
+if(msg.type==='log'){
+pushLog(msg.text);
+}
+}catch(e){}
+});
+conn.on('close',()=>{
+$('#connText').textContent='Koneksi terputus';
+$('#connBox').className='conn-status';
+});
+}
 async function startCamera(){
 try{
 const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280}},audio:false});
 localStream=stream;
 $('#hkVideo').srcObject=stream;
-appState.camOn=true;
-saveState();
-logMsg('Kamera housekeeping dinyalakan');
 renderCamera();
-startOffer(stream);
+pushLog('Kamera dinyalakan');
+saveLocal();
+dataConns.forEach(c=>{
+if(c.open&&c.peer){
+try{
+const call=peer.call(c.peer,stream);
+}catch(e){}
+}
+});
 }catch(e){
-alert('Gagal akses kamera: '+e.message);
+alert('Gagal kamera: '+e.message+' — harus HTTPS dan izinkan kamera');
 }
 }
 function stopCamera(){
 if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
-if(pc){pc.close();pc=null;}
-if(remotePc){remotePc.close();remotePc=null;}
-appState.camOn=false;
-saveState();
 renderCamera();
-rtcChannel.postMessage({type:'cam-off'});
-logMsg('Kamera dimatikan');
+pushLog('Kamera dimatikan');
+saveLocal();
 }
 function snapPhoto(){
 if(!localStream) return;
@@ -309,84 +411,35 @@ const c=$('#hiddenCanvas');
 c.width=v.videoWidth||720;
 c.height=v.videoHeight||480;
 c.getContext('2d').drawImage(v,0,0);
-const data=c.toDataURL('image/jpeg',0.7);
+const data=c.toDataURL('image/jpeg',0.65);
 appState.photos.unshift(data);
-if(appState.photos.length>6) appState.photos.pop();
-saveState();
+if(appState.photos.length>8) appState.photos.pop();
 renderPhotos();
-logMsg('Foto bukti diambil');
+saveLocal();
+pushLog('Foto bukti diambil');
 }
-function startOffer(stream){
-isOfferer=true;
-pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
-stream.getTracks().forEach(track=>pc.addTrack(track,stream));
-pc.onicecandidate=e=>{if(e.candidate) rtcChannel.postMessage({type:'candidate',candidate:e.candidate,from:'hk'});};
-pc.createOffer().then(o=>{pc.setLocalDescription(o);rtcChannel.postMessage({type:'offer',sdp:o});});
-}
-function handleOffer(msg){
-if(role!=='guest') return;
-remotePc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
-remotePc.ontrack=e=>{
-$('#guestVideo').srcObject=e.streams[0];
-$('#camPlaceholder').style.display='none';
-$('#camStatus').innerHTML='<span class="on"></span> Live';
-$('#camStatus').className='cam-status on';
-$('#camSub').textContent='Melihat langsung dari kamera housekeeping';
-};
-remotePc.onicecandidate=e=>{if(e.candidate) rtcChannel.postMessage({type:'candidate',candidate:e.candidate,from:'guest'});};
-remotePc.setRemoteDescription(new RTCSessionDescription(msg.sdp)).then(()=>remotePc.createAnswer()).then(ans=>{remotePc.setLocalDescription(ans);rtcChannel.postMessage({type:'answer',sdp:ans});});
-}
-syncChannel.onmessage=e=>{
-if(e.data.type==='state'){
-appState=e.data.data;
-localStorage.setItem('hotel-state-v2',JSON.stringify(appState));
-renderAll();
-}
-};
-rtcChannel.onmessage=e=>{
-const m=e.data;
-if(m.type==='offer'&&role==='guest'){handleOffer(m);}
-if(m.type==='answer'&&isOfferer&&pc){pc.setRemoteDescription(new RTCSessionDescription(m.sdp));}
-if(m.type==='candidate'){
-const target=m.from==='hk'?remotePc:pc;
-if(target&&m.candidate) target.addIceCandidate(new RTCIceCandidate(m.candidate));
-}
-if(m.type==='cam-off'){
-if($('#guestVideo').srcObject){$('#guestVideo').srcObject.getTracks().forEach(t=>t.stop());$('#guestVideo').srcObject=null;}
-renderCamera();
-}
-};
-function initEvents(){
+function init(){
+const savedRoom=localStorage.getItem('roomCode');
+if(savedRoom){roomCode=savedRoom;$('#roomInput').value=roomCode;}
+const params=new URLSearchParams(location.search);
+if(params.get('room')){roomCode=params.get('room');$('#roomInput').value=roomCode;localStorage.setItem('roomCode',roomCode);}
+updateQr();
+if(!appState.log.length){appState.log=[{t:'00:00',msg:'Sistem siap — silakan buat sesi'}];saveLocal();}
 $$('.role-btn').forEach(b=>b.addEventListener('click',()=>setRole(b.dataset.role)));
+$('#saveRoom').addEventListener('click',()=>{roomCode=$('#roomInput').value.trim()||'301';localStorage.setItem('roomCode',roomCode);updateQr();renderProgress();});
+$('#createSession').addEventListener('click',createHkSession);
+$('#joinSession').addEventListener('click',joinAsGuest);
 $('#startCamBtn').addEventListener('click',startCamera);
 $('#stopCamBtn').addEventListener('click',stopCamera);
 $('#snapBtn').addEventListener('click',snapPhoto);
-$('#completeBtn').addEventListener('click',()=>{
-appState.tasks=[true,true,true,true];
-appState.progress=100;
-appState.step=8;
-saveState();renderAll();
-$('#toast').classList.add('show');
-logMsg('Kamar ditandai siap');
-});
-$('#foReady').addEventListener('click',()=>{
-appState.progress=100;appState.tasks=[true,true,true,true];appState.step=8;saveState();renderAll();$('#toast').classList.add('show');logMsg('FO: dipaksa siap');
-});
-$('#foReset').addEventListener('click',()=>{
-if(confirm('Reset semua?')){appState={step:0,progress:0,status:'waiting',tasks:[false,false,false,false],photos:[],camOn:false,log:[]};saveState();renderAll();logMsg('Direset');}
-});
-$('#foAssign').addEventListener('click',()=>{appState.step=4;saveState();renderAll();logMsg('HK ditugaskan');});
-$('#howBtn').addEventListener('click',()=>$('#howModal').classList.add('show'));
-$('#closeHow').addEventListener('click',()=>$('#howModal').classList.remove('show'));
-$('#howModal').addEventListener('click',e=>{if(e.target.id==='howModal') e.currentTarget.classList.remove('show');});
+$('#completeBtn').addEventListener('click',()=>{appState.tasks=[true,true,true,true];appState.progress=100;appState.step=7;renderAll();saveLocal();$('#toast').classList.add('show');pushLog(`Kamar ${roomCode} siap — notifikasi terkirim`);});
 $('#toastClose').addEventListener('click',()=>$('#toast').classList.remove('show'));
-$('#photoStrip').addEventListener('click',e=>{if(e.target.classList.contains('del')){appState.photos.splice(parseInt(e.target.dataset.i),1);saveState();renderPhotos();}});
+$('#photoStrip').addEventListener('click',e=>{if(e.target.classList.contains('del')){appState.photos.splice(parseInt(e.target.dataset.i),1);renderPhotos();saveLocal();}});
 setInterval(()=>{$('#clock').textContent=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});$('#overlayTime').textContent=new Date().toLocaleTimeString('id-ID');},1000);
-}
-if(!appState.log.length){appState.log=[{t:'00:00',msg:'Sistem standby — siap menerima tamu'}];saveState();}
-initEvents();
 setRole('guest');
 renderAll();
+}
+init();
 </script>
 </body>
 </html>
