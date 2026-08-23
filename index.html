@@ -1,278 +1,164 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>LIVE ROOM PRO — Secure P2P (Fixed)</title>
+<title>LIVE ROOM PRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
-<body>
-<div class="page-bg"></div>
-
-<!-- NAV -->
+<body class="role-hk">
+<div class="bg"></div>
 <nav class="nav">
-  <div class="nav-inner">
-    <div class="brand">
-      <div class="logo">LR</div>
-      <div class="brand-text">
-        <b>LIVE ROOM PRO</b>
-        <span>SECURE P2P • FIXED v12</span>
-      </div>
-    </div>
-    <div class="role-switch">
-      <button class="role-btn active" data-role="hk">Petugas</button>
-      <button class="role-btn" data-role="guest">Tamu</button>
-    </div>
-    <div class="nav-right">
-      <div class="secure-badge">🔒 E2E Encrypted • TURN OK</div>
-      <div class="live-pill"><div class="dot"></div><span id="connText">Belum terhubung</span></div>
-      <div class="time" id="clock">00:00</div>
-    </div>
-  </div>
-  <div class="security-bar">
-    <span>🔐 PIN protected • Auto-reconnect • Flip sync fix</span>
-    <span id="overlayTime">00:00:00</span>
-  </div>
+<div class="nav-in">
+<div class="brand">
+<div class="logo">LR</div>
+<div class="brand-t"><b>LIVE ROOM PRO</b><span id="navRoleLabel">MODE PETUGAS</span></div>
+</div>
+<div class="role-sw">
+<button class="rb active" data-role="hk">Petugas</button>
+<button class="rb" data-role="guest">Tamu</button>
+</div>
+<div class="nav-r">
+<div class="pill ok"><span class="d"></span><span id="connText">Offline</span></div>
+<div class="time" id="clock">00:00</div>
+</div>
+</div>
 </nav>
 
 <div class="wrap">
-  <!-- TOP -->
-  <div class="top-grid">
-    <div class="connect-card">
-      <div class="cc-head">
-        <div>
-          <h3>Koneksi Room</h3>
-          <div class="cc-sub">Gunakan kode yang sama di 2 device. Kode disimpan otomatis di browser. Untuk presentasi pakai localhost/HTTPS.</div>
-        </div>
-        <div class="badge ready" id="heroBadge" style="display:none">Menunggu</div>
-      </div>
 
-      <div class="cc-form">
-        <div class="field"><label>Room Code (Kamar)</label><input id="roomInput" placeholder="contoh: 204A" maxlength="12" autocomplete="off"></div>
-        <div class="field"><label>PIN Keamanan</label><input id="pinInput" placeholder="min 3 digit" maxlength="6" type="password" inputmode="numeric"></div>
-      </div>
-
-      <div class="qr-row">
-        <div class="qr-box">
-          <img id="qrImg" src="" alt="QR">
-          <span id="qrLabel">QR Kamar</span>
-        </div>
-        <div class="conn-info">
-          <div id="connBox" class="conn-status"><div class="dot"></div><span id="connStatus">Belum terhubung</span></div>
-          <div id="viewerRealCountWrap" class="viewer-real" style="display:none">👁️ <span id="viewerRealCount">0 penonton</span> <span class="live-dot">• LIVE</span></div>
-        </div>
-      </div>
-
-      <div class="conn-actions">
-        <button id="createSession" class="btn-dark hk-only">Buat Sesi Petugas</button>
-        <button id="joinSession" class="btn-dark guest-only">Gabung Sebagai Tamu</button>
-        <button id="leaveSession" class="btn-line">Keluar / Reset Sesi</button>
-      </div>
-    </div>
-
-    <div class="hero-card">
-      <div class="hc-top">
-        <span id="hcRoom">KAMAR 101</span>
-        <span id="statusBadge" class="badge wait">Menunggu</span>
-      </div>
-      <div class="big-progress">
-        <div class="circle-wrap">
-          <svg viewBox="0 0 100 100"><circle class="circle-bg" cx="50" cy="50" r="44"></circle><circle id="circleFg" class="circle-fg" cx="50" cy="50" r="44"></circle></svg>
-          <div class="circle-inner">
-            <strong id="bigPercent">0%</strong>
-            <span id="bigLabel">Belum Mulai</span>
-          </div>
-        </div>
-        <div class="est">
-          <span>Estimasi</span>
-          <strong id="estText">Menunggu petugas</strong>
-          <div class="bar"><span id="estBar"></span></div>
-        </div>
-      </div>
-      <div id="roomPhotoWrap" class="room-photo-wrap">
-        <img id="roomPhoto" src="" alt="Room">
-        <div class="photo-overlay" id="photoOverlayLabel">Foto Asli Kamar • Tap untuk zoom</div>
-      </div>
-      <button id="completeBtn" class="btn-primary" style="margin-top:14px">Tandai Selesai & Kirim Notif</button>
-    </div>
-  </div>
-
-  <!-- MAIN -->
-  <div class="main-grid">
-    <div class="left-col">
-      <div class="panel">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h4 style="font-size:13px">Alur Kerja</h4>
-          <span style="font-size:10px;color:var(--muted);font-weight:600">7 langkah</span>
-        </div>
-        <div id="flow" class="flow"></div>
-      </div>
-
-      <div class="checklist-card hk-only">
-        <div class="cl-head"><h4>Checklist Petugas</h4><span id="clProgress">0/4</span></div>
-        <div id="checklist" class="checklist"></div>
-      </div>
-
-      <div class="checklist-card guest-only">
-        <div class="cl-head"><h4>Status Live Tamu</h4><span id="guestClProgress">Menunggu</span></div>
-        <div id="guestList" class="checklist"></div>
-      </div>
-
-      <div class="log-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <h4 style="font-size:12px">Log Sistem (Sinkron)</h4>
-          <span style="font-size:10px;color:var(--muted)">Realtime</span>
-        </div>
-        <div id="logList" class="log-list"></div>
-      </div>
-    </div>
-
-    <div class="right-col">
-      <!-- HK CAMERA -->
-      <div id="mainCamStage" class="camera-card">
-        <div class="cam-head">
-          <div><strong>Kamera Petugas</strong><span>720p • Flip sync fix • Blur optional</span></div>
-          <div id="camStatus" class="cam-status"><span></span> Offline</div>
-        </div>
-        <div id="viewerBar" class="viewer-bar">
-          <div class="viewer-left">
-            <div class="eye">👁️</div>
-            <div><strong id="viewerCount">0 tamu menonton</strong><span id="viewerNames">Belum ada penonton</span></div>
-          </div>
-          <div class="viewer-avatars" id="viewerAvatars"></div>
-        </div>
-        <div class="cam-stage" id="camStageHk">
-          <video id="hkVideo" autoplay playsinline muted></video>
-          <canvas id="watermarkCanvas" class="watermark"></canvas>
-          <div id="camPlaceholder" class="cam-placeholder">
-            <div class="ph-icon">📷</div>
-            <p>Kamera Off — Nyalakan untuk mulai live</p>
-            <span>Di HP wajib pakai HTTPS atau localhost. Jika hitam, klik Fix Hitam.</span>
-            <button class="fix-link" id="startCamBtn">Nyalakan Kamera</button>
-          </div>
-          <div class="cam-overlay">
-            <div class="overlay-tag" id="overlayTag">KAMAR 101 • LIVE</div>
-            <div class="live-badge"><div class="dot"></div>REC • P2P</div>
-          </div>
-          <div id="guestTalkingIndicator" class="talking-indicator"><div class="dot"></div><span id="guestTalkingText">Tamu berbicara...</span></div>
-          <div class="cam-controls">
-            <button id="flipCamBtn" class="btn-line">🔄 Flip</button>
-            <button id="snapBtn" class="btn-line">📸 Foto</button>
-            <button id="blurBtn" class="btn-line">🫧 Blur</button>
-            <button id="stopCamBtn" class="btn-line">Matikan</button>
-            <button id="fixBlackBtn" class="btn-line">🛠️ Fix Hitam</button>
-            <button id="fsBtnMain" class="btn-line">⛶ Full</button>
-          </div>
-          <button id="hkTalkBtn" class="btn-mic" style="position:absolute;bottom:54px;left:50%;transform:translateX(-50%)">
-            <span>🎙️</span><span><b>Tahan untuk Bicara</b><small>Anti delay • Lepas untuk mute</small></span>
-          </button>
-        </div>
-        <div style="padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap">
-          <div style="font-size:10px;color:var(--muted)">💡 Tips: Flip sekarang pakai replaceTrack — tidak perlu reconnect & tetap sinkron ke semua tamu</div>
-        </div>
-      </div>
-
-      <!-- GUEST CAMERA -->
-      <div id="guestCamStage" class="camera-card guest-stage">
-        <div class="cam-head">
-          <div><strong>Live View Tamu</strong><span>Menerima stream petugas • Auto-reconnect</span></div>
-          <div class="live-badge-guest"><div class="dot"></div><span id="pipCount">0</span> LIVE</div>
-        </div>
-        <div class="cam-stage" id="camStageGuest">
-          <video id="guestVideoMain" autoplay playsinline></video>
-          <canvas id="watermarkCanvasGuest" class="watermark"></canvas>
-          <div id="camPlaceholderGuest" class="cam-placeholder">
-            <div class="ph-icon">👁️</div>
-            <p>Menunggu stream petugas...</p>
-            <span>Pastikan petugas sudah buat sesi & nyalakan kamera. Jika lama, klik Request Ulang.</span>
-            <button class="fix-link" id="fixBlackGuestBtn">🔄 Request Stream Ulang</button>
-          </div>
-          <div class="cam-overlay">
-            <div class="overlay-tag" id="overlayTagGuest">LIVE VIEW • Kamar</div>
-          </div>
-          <div id="hkTalkingIndicator" class="talking-indicator"><div class="dot"></div><span>Petugas berbicara...</span></div>
-          <div class="cam-controls">
-            <button id="fsBtnGuest" class="btn-line">⛶ Fullscreen</button>
-          </div>
-          <button id="guestTalkBtn" class="btn-mic guest-mic" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%)">
-            <span>🎙️</span><span><b>Tahan Bicara ke Petugas</b><small>Push-to-talk anti-feedback</small></span>
-          </button>
-        </div>
-        <audio id="hkRemoteAudio" class="hidden-audio" autoplay playsinline></audio>
-      </div>
-
-      <audio id="guestRemoteAudio" class="hidden-audio" autoplay playsinline></audio>
-      <audio id="hkRemoteAudio" class="hidden-audio" autoplay playsinline></audio>
-
-      <div class="panel">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <h4 style="font-size:12.5px">Foto Bukti (Sinkron Tamu & Petugas)</h4>
-          <span style="font-size:10px;color:var(--muted)">Klik foto untuk zoom</span>
-        </div>
-        <div id="photoStrip" class="photo-strip"></div>
-        <canvas id="hiddenCanvas" style="display:none"></canvas>
-      </div>
-    </div>
-  </div>
+<div class="top hk-only">
+<div class="card c1">
+<div class="ch"><div><h3>Panel Petugas Housekeeping</h3><p>Buat sesi, kelola kamar, live ke tamu. Aman PIN & E2E.</p></div><div class="bdg ready">Petugas</div></div>
+<div class="form2">
+<div class="f"><label>Room Code</label><input id="roomInput" placeholder="204A" maxlength="10"></div>
+<div class="f"><label>PIN Sesi</label><input id="pinInput" type="password" inputmode="numeric" placeholder="1234" maxlength="6"></div>
+</div>
+<div class="qr-row">
+<div class="qr"><img id="qrImg" src=""><span id="qrLabel">QR</span></div>
+<div class="conn">
+<div id="connBox" class="conn-s"><div class="dot"></div><span id="connStatus">Belum aktif</span></div>
+<div id="viewerWrap" class="viewer-pill" style="display:none"><span>👁️</span><b id="viewerRealCount">0</b><span id="viewerRealTxt">tamu live</span><span class="live-d">•</span></div>
+<div class="acts">
+<button id="createSession" class="btn black">Buat Sesi Live</button>
+<button id="leaveSession" class="btn line">Reset</button>
+</div>
+</div>
+</div>
+</div>
+<div class="card hero">
+<div class="hero-top"><span id="hcRoom">KAMAR 101</span><span id="heroBadge" class="badge wait">Menunggu</span></div>
+<div class="prog">
+<div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFg" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div>
+<div class="est"><span>Estimasi Selesai</span><strong id="estText">Menunggu petugas</strong><div class="bar"><i id="estBar"></i></div></div>
+</div>
+<div id="roomPhotoWrap" class="rp"><img id="roomPhoto" src=""><div class="rp-tag" id="photoOverlayLabel">Foto Kamar</div></div>
+<button id="completeBtn" class="btn black full">Tandai 100% & Kirim Notif Tamu</button>
+</div>
 </div>
 
-<!-- Toast -->
-<div id="toast" class="toast">
-  <div class="toast-icon">✓</div>
-  <div><strong>Kamar Siap 100%</strong><span id="toastMsg">Notifikasi terkirim ke tamu</span></div>
-  <button id="toastClose">✕</button>
+<div class="top guest-only">
+<div class="card c1 guest-card">
+<div class="ch"><div><h3>Akses Tamu</h3><p>Scan QR dari petugas atau masukkan kode kamar untuk lihat live status.</p></div><div class="bdg ready">Tamu</div></div>
+<div class="guest-actions">
+<button id="scanQrBtn" class="btn black" style="width:100%"><span>📷</span> Scan QR Kamar</button>
+<div class="or"><span>atau masuk manual</span></div>
+<div class="form2">
+<div class="f"><label>Room Code</label><input id="roomInputG" placeholder="204A"></div>
+<div class="f"><label>PIN</label><input id="pinInputG" type="password" placeholder="1234"></div>
+</div>
+<div class="acts"><button id="joinSession" class="btn black full">Lihat Live Status Kamar</button></div>
+<div id="connBoxG" class="conn-s" style="margin-top:12px"><div class="dot"></div><span id="connStatusG">Belum terhubung</span></div>
+</div>
+</div>
+<div class="card hero guest-hero">
+<div class="hero-top"><span id="hcRoomG">KAMAR -</span><span id="heroBadgeG" class="badge wait">Menunggu</span></div>
+<div class="prog">
+<div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFgG" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercentG">0%</strong><span id="bigLabelG">Belum Mulai</span></div></div>
+<div class="est"><span>Estimasi</span><strong id="estTextG">Menunggu petugas</strong><div class="bar"><i id="estBarG"></i></div></div>
+</div>
+<div class="guest-info"><div class="gi"><span>🔒</span><b>P2P Encrypted</b><p>Video langsung dari petugas, tanpa server</p></div><div class="gi"><span>⚡</span><b>Auto Reconnect</b><p>Tetap terhubung walau sinyal naik turun</p></div></div>
+</div>
 </div>
 
-<!-- Permission Modal -->
-<div id="permModal" class="perm-modal">
-  <div class="perm-box">
-    <h3 style="font-size:14px">Izin Kamera / Mic Dibutuhkan</h3>
-    <p style="font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.5">Browser memblokir kamera/mic. Aktifkan izin di ikon gembok di address bar, pastikan pakai HTTPS atau localhost, lalu retry.</p>
-    <div style="display:flex;gap:8px;margin-top:14px">
-      <button id="permRetry" class="btn-dark" style="flex:1">Coba Lagi</button>
-      <button id="permClose" class="btn-line" style="flex:1">Tutup</button>
-    </div>
-  </div>
+<div class="grid">
+<div class="left">
+<div class="card panel hk-only">
+<div class="ph"><h4>Alur Pembersihan</h4><span>7 langkah</span></div>
+<div id="flow" class="flow"></div>
+</div>
+<div class="card panel">
+<div class="ph"><h4 class="hk-only">Checklist Petugas</h4><h4 class="guest-only">Status Pembersihan (Live)</h4><span id="clProgress">0/4</span></div>
+<div id="checklist" class="list hk-only"></div>
+<div id="guestList" class="list guest-only"></div>
+</div>
+<div class="card panel">
+<div class="ph"><h4>Log Aktivitas</h4><span class="live">Realtime</span></div>
+<div id="logList" class="log"></div>
+</div>
 </div>
 
-<!-- Photo Viewer -->
-<div id="photoViewer" class="photo-viewer">
-  <div id="pvBackdrop" class="pv-backdrop"></div>
-  <div class="pv-content">
-    <div style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)">
-      <strong style="font-size:13px">Foto Bukti</strong>
-      <div style="display:flex;gap:8px">
-        <a id="pvDownload" class="btn-line" download="bukti.jpg" style="text-decoration:none;padding:6px 12px;font-size:11px">⬇️ Download</a>
-        <button id="pvClose" class="btn-line" style="padding:6px 12px">✕ Tutup</button>
-      </div>
-    </div>
-    <img id="pvImg" src="" alt="preview">
-  </div>
+<div class="right">
+<div id="mainCamStage" class="card cam hk-only">
+<div class="cam-h"><div><strong>Kamera Petugas</strong><span id="camSub">Siap live • Flip sync • 720p</span></div><div id="camStatus" class="st">Offline</div></div>
+<div id="viewerBar" class="vbar"><div class="vl"><div class="eye">👁️</div><div><strong id="viewerCount">0 tamu</strong><span id="viewerNames">Belum ada penonton</span></div></div><div id="viewerAvatars" class="avs"></div></div>
+<div class="stage">
+<video id="hkVideo" autoplay playsinline muted></video>
+<canvas id="watermarkCanvas" class="wm"></canvas>
+<div id="camPlaceholder" class="phd"><div class="ic">📷</div><p>Kamera Mati</p><span>Tap tombol di bawah untuk mulai. Wajib HTTPS / localhost di HP.</span><button id="startCamBtn" class="btn black">Nyalakan Kamera</button></div>
+<div class="ov"><span id="overlayTag">KAMAR 101 • LIVE</span><span class="rec"><i></i>REC P2P</span></div>
+<div id="guestTalkingIndicator" class="talk"><i></i><span>Tamu berbicara...</span></div>
 </div>
+<div class="ctrl">
+<button id="flipCamBtn" class="btn line small">🔄 Flip</button>
+<button id="snapBtn" class="btn line small">📸 Foto</button>
+<button id="blurBtn" class="btn line small">🫧 Blur</button>
+<button id="stopCamBtn" class="btn line small">⏹ Stop</button>
+<button id="fixBlackBtn" class="btn line small">🛠️ Fix</button>
+<button id="fsBtnMain" class="btn line small">⛶ Full</button>
+</div>
+<div class="mic-wrap"><button id="hkTalkBtn" class="mic"><span>🎙️</span><div><b>Tahan Bicara ke Tamu</b><small>Lepas untuk mute</small></div></button></div>
+</div>
+
+<div id="guestCamStage" class="card cam guest-only">
+<div class="cam-h"><div><strong>Live Kamar</strong><span>Stream langsung dari petugas</span></div><div class="live-pill"><div class="dot"></div><span id="liveCount">LIVE</span></div></div>
+<div class="stage large">
+<video id="guestVideoMain" autoplay playsinline></video>
+<canvas id="watermarkCanvasGuest" class="wm"></canvas>
+<div id="camPlaceholderGuest" class="phd"><div class="ic">👁️</div><p>Menunggu Petugas</p><span>Petugas belum menyalakan kamera. Tetap di halaman ini, akan auto-connect.</span><button id="fixBlackGuestBtn" class="btn black">Request Stream Ulang</button></div>
+<div class="ov"><span id="overlayTagGuest">LIVE VIEW</span></div>
+<div id="hkTalkingIndicator" class="talk"><i></i><span>Petugas berbicara...</span></div>
+</div>
+<div class="ctrl center">
+<button id="fsBtnGuest" class="btn line small">⛶ Fullscreen</button>
+<button id="reqBtnG" class="btn line small">🔄 Refresh</button>
+</div>
+<div class="mic-wrap"><button id="guestTalkBtn" class="mic guest"><span>🎙️</span><div><b>Tahan Bicara ke Petugas</b><small>Push-to-talk</small></div></button></div>
+</div>
+
+<div class="card panel">
+<div class="ph"><h4>Foto Bukti</h4><span class="guest-only">Sinkron otomatis</span><span class="hk-only">Klik untuk zoom</span></div>
+<div id="photoStrip" class="strip"></div>
+<canvas id="hiddenCanvas" style="display:none"></canvas>
+</div>
+</div>
+</div>
+</div>
+
+<div id="toast" class="toast"><div class="ti">✓</div><div><strong>Kamar 100% Siap</strong><span>Tamu sudah menerima notifikasi</span></div><button id="toastClose">✕</button></div>
+
+<div id="permModal" class="modal"><div class="box"><h3>Izin Kamera Diperlukan</h3><p>Browser memblokir akses kamera. Aktifkan izin di ikon gembok address bar dan pastikan pakai HTTPS atau localhost.</p><div class="row"><button id="permRetry" class="btn black" style="flex:1">Coba Lagi</button><button id="permClose" class="btn line" style="flex:1">Tutup</button></div></div></div>
+
+<div id="photoViewer" class="modal photo-v"><div id="pvBackdrop" class="bd"></div><div class="pbox"><div class="phead"><strong>Foto Bukti</strong><div><a id="pvDownload" class="btn line small" download="bukti.jpg">Download</a><button id="pvClose" class="btn line small">✕</button></div></div><img id="pvImg" src=""></div></div>
+
+<div id="qrScannerModal" class="modal"><div class="box large"><div class="phead"><strong>Scan QR Kamar</strong><button id="qrClose" class="btn line small">✕</button></div><div id="qrReader" style="width:100%"></div><p style="font-size:11px;color:#888;margin-top:10px">Arahkan kamera HP ke QR yang ditampilkan petugas. Otomatis isi Room & PIN.</p></div></div>
+
+<audio id="hkRemoteAudio" autoplay playsinline style="display:none"></audio>
+<audio id="guestRemoteAudio" autoplay playsinline style="display:none"></audio>
 
 <script src="app.js"></script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</body>
 </html>
