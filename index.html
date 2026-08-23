@@ -15,13 +15,13 @@
 <div class="nav-in">
 <div class="brand">
 <div class="logo">LR</div>
-<div class="brand-t"><b>LIVE ROOM PRO</b><span id="navRoleLabel">MODE PETUGAS</span></div>
+<div class="bt"><b>LIVE ROOM PRO</b><span id="navRole">PETUGAS MODE • SYMMETRIC</span></div>
 </div>
-<div class="role-sw">
+<div class="sw">
 <button class="rb active" data-role="hk">Petugas</button>
 <button class="rb" data-role="guest">Tamu</button>
 </div>
-<div class="nav-r">
+<div class="nr">
 <div class="pill ok"><span class="d"></span><span id="connText">Offline</span></div>
 <div class="time" id="clock">00:00</div>
 </div>
@@ -32,133 +32,116 @@
 
 <div class="top hk-only">
 <div class="card c1">
-<div class="ch"><div><h3>Panel Petugas Housekeeping</h3><p>Buat sesi, kelola kamar, live ke tamu. Aman PIN & E2E.</p></div><div class="bdg ready">Petugas</div></div>
+<div class="ch"><div><h3>Panel Housekeeping</h3><p>Buat sesi live, kelola progres, QR otomatis untuk tamu</p></div><div class="badge ready">Petugas</div></div>
 <div class="form2">
 <div class="f"><label>Room Code</label><input id="roomInput" placeholder="204A" maxlength="10"></div>
-<div class="f"><label>PIN Sesi</label><input id="pinInput" type="password" inputmode="numeric" placeholder="1234" maxlength="6"></div>
+<div class="f"><label>PIN</label><input id="pinInput" type="password" placeholder="1234" maxlength="6"></div>
 </div>
 <div class="qr-row">
 <div class="qr"><img id="qrImg" src=""><span id="qrLabel">QR</span></div>
 <div class="conn">
-<div id="connBox" class="conn-s"><div class="dot"></div><span id="connStatus">Belum aktif</span></div>
-<div id="viewerWrap" class="viewer-pill" style="display:none"><span>👁️</span><b id="viewerRealCount">0</b><span id="viewerRealTxt">tamu live</span><span class="live-d">•</span></div>
-<div class="acts">
-<button id="createSession" class="btn black">Buat Sesi Live</button>
-<button id="leaveSession" class="btn line">Reset</button>
-</div>
+<div id="connBox" class="cs"><div class="dot"></div><span id="connStatus">Belum aktif</span></div>
+<div id="viewerWrap" class="vpill" style="display:none"><span>👁️</span><b id="viewerRealCount">0</b> tamu live</div>
+<div class="acts"><button id="createSession" class="btn black">Buat Sesi Live</button><button id="leaveSession" class="btn line">Reset</button></div>
 </div>
 </div>
 </div>
 <div class="card hero">
-<div class="hero-top"><span id="hcRoom">KAMAR 101</span><span id="heroBadge" class="badge wait">Menunggu</span></div>
-<div class="prog">
-<div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFg" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div>
-<div class="est"><span>Estimasi Selesai</span><strong id="estText">Menunggu petugas</strong><div class="bar"><i id="estBar"></i></div></div>
-</div>
-<div id="roomPhotoWrap" class="rp"><img id="roomPhoto" src=""><div class="rp-tag" id="photoOverlayLabel">Foto Kamar</div></div>
-<button id="completeBtn" class="btn black full">Tandai 100% & Kirim Notif Tamu</button>
+<div class="ht"><span id="hcRoom">KAMAR 101</span><span id="heroBadge" class="badge wait">Menunggu</span></div>
+<div class="prog"><div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFg" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercent">0%</strong><span id="bigLabel">Belum Mulai</span></div></div><div class="est"><span>Estimasi</span><strong id="estText">Menunggu</strong><div class="bar"><i id="estBar"></i></div></div></div>
+<div id="roomPhotoWrap" class="rp"><img id="roomPhoto" src=""><div class="rp-t" id="photoOverlayLabel">Foto Kamar</div></div>
+<button id="completeBtn" class="btn black full">Selesaikan 100% & Rayakan</button>
 </div>
 </div>
 
 <div class="top guest-only">
 <div class="card c1 guest-card">
-<div class="ch"><div><h3>Akses Tamu</h3><p>Scan QR dari petugas atau masukkan kode kamar untuk lihat live status.</p></div><div class="bdg ready">Tamu</div></div>
+<div class="ch"><div><h3>Akses Tamu</h3><p>Scan QR dari petugas untuk melihat status kamar live</p></div><div class="badge ready">Tamu</div></div>
 <div class="guest-actions">
-<button id="scanQrBtn" class="btn black" style="width:100%"><span>📷</span> Scan QR Kamar</button>
-<div class="or"><span>atau masuk manual</span></div>
+<button id="scanQrBtn" class="btn black full big"><span>📷</span> Scan QR Kamar</button>
+<div class="or"><span>atau manual</span></div>
 <div class="form2">
-<div class="f"><label>Room Code</label><input id="roomInputG" placeholder="204A"></div>
+<div class="f"><label>Room</label><input id="roomInputG" placeholder="204A"></div>
 <div class="f"><label>PIN</label><input id="pinInputG" type="password" placeholder="1234"></div>
 </div>
-<div class="acts"><button id="joinSession" class="btn black full">Lihat Live Status Kamar</button></div>
-<div id="connBoxG" class="conn-s" style="margin-top:12px"><div class="dot"></div><span id="connStatusG">Belum terhubung</span></div>
+<div class="acts"><button id="joinSession" class="btn black full big">Masuk Live View</button></div>
+<div id="connBoxG" class="cs" style="margin-top:12px"><div class="dot"></div><span id="connStatusG">Belum terhubung</span></div>
 </div>
 </div>
-<div class="card hero guest-hero">
-<div class="hero-top"><span id="hcRoomG">KAMAR -</span><span id="heroBadgeG" class="badge wait">Menunggu</span></div>
-<div class="prog">
-<div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFgG" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercentG">0%</strong><span id="bigLabelG">Belum Mulai</span></div></div>
-<div class="est"><span>Estimasi</span><strong id="estTextG">Menunggu petugas</strong><div class="bar"><i id="estBarG"></i></div></div>
-</div>
-<div class="guest-info"><div class="gi"><span>🔒</span><b>P2P Encrypted</b><p>Video langsung dari petugas, tanpa server</p></div><div class="gi"><span>⚡</span><b>Auto Reconnect</b><p>Tetap terhubung walau sinyal naik turun</p></div></div>
+<div class="card hero">
+<div class="ht"><span id="hcRoomG">KAMAR -</span><span id="heroBadgeG" class="badge wait">Menunggu</span></div>
+<div class="prog"><div class="circ"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="44"></circle><circle id="circleFgG" class="fg" cx="50" cy="50" r="44"></circle></svg><div class="ci"><strong id="bigPercentG">0%</strong><span id="bigLabelG">Belum</span></div></div><div class="est"><span>Status</span><strong id="estTextG">Menunggu petugas</strong><div class="bar"><i id="estBarG"></i></div></div></div>
+<div class="ginfo"><div class="gi"><b>🔒 P2P</b><span>Enkripsi ujung ke ujung</span></div><div class="gi"><b>⚡ Auto</b><span>Reconnect otomatis</span></div><div class="gi"><b>📱 Full</b><span>True fullscreen support</span></div></div>
 </div>
 </div>
 
 <div class="grid">
 <div class="left">
-<div class="card panel hk-only">
-<div class="ph"><h4>Alur Pembersihan</h4><span>7 langkah</span></div>
-<div id="flow" class="flow"></div>
+<div class="card panel hk-only"><div class="ph"><h4>Alur Kerja</h4><span>7 langkah</span></div><div id="flow" class="flow"></div></div>
+<div class="card panel"><div class="ph"><h4 class="hk-only">Checklist</h4><h4 class="guest-only">Status Live</h4><span id="clProgress">0/4</span></div><div id="checklist" class="list hk-only"></div><div id="guestList" class="list guest-only"></div></div>
+<div class="card panel"><div class="ph"><h4>Log</h4><span class="live">Realtime</span></div><div id="logList" class="log"></div></div>
 </div>
-<div class="card panel">
-<div class="ph"><h4 class="hk-only">Checklist Petugas</h4><h4 class="guest-only">Status Pembersihan (Live)</h4><span id="clProgress">0/4</span></div>
-<div id="checklist" class="list hk-only"></div>
-<div id="guestList" class="list guest-only"></div>
-</div>
-<div class="card panel">
-<div class="ph"><h4>Log Aktivitas</h4><span class="live">Realtime</span></div>
-<div id="logList" class="log"></div>
-</div>
-</div>
-
 <div class="right">
 <div id="mainCamStage" class="card cam hk-only">
-<div class="cam-h"><div><strong>Kamera Petugas</strong><span id="camSub">Siap live • Flip sync • 720p</span></div><div id="camStatus" class="st">Offline</div></div>
-<div id="viewerBar" class="vbar"><div class="vl"><div class="eye">👁️</div><div><strong id="viewerCount">0 tamu</strong><span id="viewerNames">Belum ada penonton</span></div></div><div id="viewerAvatars" class="avs"></div></div>
-<div class="stage">
+<div class="cam-h"><div><strong>Kamera Petugas</strong><span>True fullscreen • Flip sinkron</span></div><div id="camStatus" class="st">Offline</div></div>
+<div id="viewerBar" class="vbar"><div class="vl"><div class="eye">👁️</div><div><strong id="viewerCount">0 tamu</strong><span id="viewerNames">Menunggu tamu</span></div></div><div id="viewerAvatars" class="avs"></div></div>
+<div class="stage" id="stageHk">
 <video id="hkVideo" autoplay playsinline muted></video>
 <canvas id="watermarkCanvas" class="wm"></canvas>
-<div id="camPlaceholder" class="phd"><div class="ic">📷</div><p>Kamera Mati</p><span>Tap tombol di bawah untuk mulai. Wajib HTTPS / localhost di HP.</span><button id="startCamBtn" class="btn black">Nyalakan Kamera</button></div>
-<div class="ov"><span id="overlayTag">KAMAR 101 • LIVE</span><span class="rec"><i></i>REC P2P</span></div>
-<div id="guestTalkingIndicator" class="talk"><i></i><span>Tamu berbicara...</span></div>
+<div id="camPlaceholder" class="phd"><div class="ic">📷</div><p>Kamera Mati</p><span>HTTPS / localhost wajib. Gunakan tombol fullscreen asli untuk bebas dari bar browser.</span><button id="startCamBtn" class="btn black">Nyalakan</button></div>
+<div class="ov"><span id="overlayTag">KAMAR 101 • LIVE</span><span class="rec"><i></i>REC</span></div>
+<div id="guestTalkingIndicator" class="talk"><i></i><span>Tamu bicara...</span></div>
+<button id="fsBtnMain" class="fs-btn" title="Fullscreen">⛶</button>
 </div>
 <div class="ctrl">
-<button id="flipCamBtn" class="btn line small">🔄 Flip</button>
-<button id="snapBtn" class="btn line small">📸 Foto</button>
-<button id="blurBtn" class="btn line small">🫧 Blur</button>
-<button id="stopCamBtn" class="btn line small">⏹ Stop</button>
-<button id="fixBlackBtn" class="btn line small">🛠️ Fix</button>
-<button id="fsBtnMain" class="btn line small">⛶ Full</button>
+<button id="flipCamBtn" class="btn line s">🔄 Flip</button>
+<button id="snapBtn" class="btn line s">📸 Foto</button>
+<button id="blurBtn" class="btn line s">🫧 Blur</button>
+<button id="stopCamBtn" class="btn line s">Stop</button>
+<button id="fixBlackBtn" class="btn line s">Fix</button>
 </div>
-<div class="mic-wrap"><button id="hkTalkBtn" class="mic"><span>🎙️</span><div><b>Tahan Bicara ke Tamu</b><small>Lepas untuk mute</small></div></button></div>
+<div class="micw"><button id="hkTalkBtn" class="mic"><span>🎙️</span><div><b>Tahan Bicara</b><small>Lepas mute</small></div></button></div>
 </div>
 
 <div id="guestCamStage" class="card cam guest-only">
-<div class="cam-h"><div><strong>Live Kamar</strong><span>Stream langsung dari petugas</span></div><div class="live-pill"><div class="dot"></div><span id="liveCount">LIVE</span></div></div>
-<div class="stage large">
+<div class="cam-h"><div><strong>Live Kamar</strong><span>Fullscreen asli tanpa terhalang</span></div><div class="pill ok small"><span class="d"></span><span id="liveCount">LIVE</span></div></div>
+<div class="stage lg" id="stageGuest">
 <video id="guestVideoMain" autoplay playsinline></video>
 <canvas id="watermarkCanvasGuest" class="wm"></canvas>
-<div id="camPlaceholderGuest" class="phd"><div class="ic">👁️</div><p>Menunggu Petugas</p><span>Petugas belum menyalakan kamera. Tetap di halaman ini, akan auto-connect.</span><button id="fixBlackGuestBtn" class="btn black">Request Stream Ulang</button></div>
-<div class="ov"><span id="overlayTagGuest">LIVE VIEW</span></div>
-<div id="hkTalkingIndicator" class="talk"><i></i><span>Petugas berbicara...</span></div>
+<div id="camPlaceholderGuest" class="phd"><div class="ic">👁️</div><p>Menunggu Stream</p><span>Tetap di sini, auto-connect saat petugas nyala</span><button id="fixBlackGuestBtn" class="btn black">Request Ulang</button></div>
+<div class="ov"><span id="overlayTagGuest">LIVE</span></div>
+<div id="hkTalkingIndicator" class="talk"><i></i><span>Petugas bicara...</span></div>
+<button id="fsBtnGuest" class="fs-btn" title="True Fullscreen">⛶ Fullscreen Asli</button>
 </div>
 <div class="ctrl center">
-<button id="fsBtnGuest" class="btn line small">⛶ Fullscreen</button>
-<button id="reqBtnG" class="btn line small">🔄 Refresh</button>
+<button id="reqBtnG" class="btn line s">🔄 Refresh Stream</button>
 </div>
-<div class="mic-wrap"><button id="guestTalkBtn" class="mic guest"><span>🎙️</span><div><b>Tahan Bicara ke Petugas</b><small>Push-to-talk</small></div></button></div>
+<div class="micw"><button id="guestTalkBtn" class="mic guest"><span>🎙️</span><div><b>Tahan Bicara ke Petugas</b><small>Push-to-talk</small></div></button></div>
 </div>
 
-<div class="card panel">
-<div class="ph"><h4>Foto Bukti</h4><span class="guest-only">Sinkron otomatis</span><span class="hk-only">Klik untuk zoom</span></div>
-<div id="photoStrip" class="strip"></div>
-<canvas id="hiddenCanvas" style="display:none"></canvas>
-</div>
+<div class="card panel"><div class="ph"><h4>Foto Bukti</h4><span>Sinkron</span></div><div id="photoStrip" class="strip"></div><canvas id="hiddenCanvas" style="display:none"></canvas></div>
 </div>
 </div>
 </div>
 
-<div id="toast" class="toast"><div class="ti">✓</div><div><strong>Kamar 100% Siap</strong><span>Tamu sudah menerima notifikasi</span></div><button id="toastClose">✕</button></div>
+<div id="toast" class="toast"><div class="ti">✓</div><div><strong>100% Siap</strong><span id="toastMsg">Kamar siap dihuni</span></div><button id="toastClose">✕</button></div>
 
-<div id="permModal" class="modal"><div class="box"><h3>Izin Kamera Diperlukan</h3><p>Browser memblokir akses kamera. Aktifkan izin di ikon gembok address bar dan pastikan pakai HTTPS atau localhost.</p><div class="row"><button id="permRetry" class="btn black" style="flex:1">Coba Lagi</button><button id="permClose" class="btn line" style="flex:1">Tutup</button></div></div></div>
+<div id="celebration" class="cele">
+<canvas id="confetti"></canvas>
+<div class="cele-box">
+<div class="cele-icon">🎉</div>
+<h2>Kamar Siap!</h2>
+<p id="celeRoom">KAMAR 101 telah selesai dibersihkan 100%</p>
+<div class="cele-stats"><div><b id="celeTime">00:00</b><span>Waktu</span></div><div><b>100%</b><span>Bersih</span></div><div><b id="celeView">0</b><span>Penonton</span></div></div>
+<div class="cele-acts"><button id="celeClose" class="btn black full big">Luar Biasa! ✨</button><button id="celeShare" class="btn line full">Bagikan Status</button></div>
+</div>
+</div>
 
-<div id="photoViewer" class="modal photo-v"><div id="pvBackdrop" class="bd"></div><div class="pbox"><div class="phead"><strong>Foto Bukti</strong><div><a id="pvDownload" class="btn line small" download="bukti.jpg">Download</a><button id="pvClose" class="btn line small">✕</button></div></div><img id="pvImg" src=""></div></div>
-
-<div id="qrScannerModal" class="modal"><div class="box large"><div class="phead"><strong>Scan QR Kamar</strong><button id="qrClose" class="btn line small">✕</button></div><div id="qrReader" style="width:100%"></div><p style="font-size:11px;color:#888;margin-top:10px">Arahkan kamera HP ke QR yang ditampilkan petugas. Otomatis isi Room & PIN.</p></div></div>
+<div id="permModal" class="modal"><div class="box"><h3>Izin Kamera</h3><p>Browser memblokir. Aktifkan di ikon gembok dan pakai HTTPS / localhost.</p><div class="row"><button id="permRetry" class="btn black" style="flex:1">Coba Lagi</button><button id="permClose" class="btn line" style="flex:1">Tutup</button></div></div></div>
+<div id="photoViewer" class="modal pv"><div id="pvBackdrop" class="bd"></div><div class="pbox"><div class="phead"><strong>Foto Bukti</strong><div><a id="pvDownload" class="btn line s" download>Download</a><button id="pvClose" class="btn line s">✕</button></div></div><img id="pvImg" src=""></div></div>
+<div id="qrScannerModal" class="modal"><div class="box large"><div class="phead"><strong>Scan QR</strong><button id="qrClose" class="btn line s">✕</button></div><div id="qrReader" style="width:100%"></div><p class="hint">Arahkan ke QR petugas, otomatis join</p></div></div>
 
 <audio id="hkRemoteAudio" autoplay playsinline style="display:none"></audio>
-<audio id="guestRemoteAudio" autoplay playsinline style="display:none"></audio>
-
 <script src="app.js"></script>
 </body>
 </html>
